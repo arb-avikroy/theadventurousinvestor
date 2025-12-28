@@ -9,7 +9,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const projectsDataEn = [
   {
     id: 1,
-    title: "SAPUI5 Bulk Excel Upload",
+    title: "SAPUI5 Bulk Excel Upload (Soon will be uploaded)",
     description:
       "Enterprise application enabling bulk Excel uploads with real-time validation, OData integration, and smart error handling for large-scale data processing.",
     tags: ["SAPUI5", "OData", "Excel", "Enterprise"],
@@ -17,7 +17,7 @@ const projectsDataEn = [
   },
   {
     id: 2,
-    title: "AI Video Generation Pipeline",
+    title: "AI Video Generation Pipeline (Soon will be uploaded)",
     description:
       "Automated content pipeline using multiple LLMs for script generation, voice synthesis, and video assembly—from idea to published video.",
     tags: ["AI", "Automation", "Video", "LLM"],
@@ -25,7 +25,7 @@ const projectsDataEn = [
   },
   {
     id: 3,
-    title: "n8n Content Automation",
+    title: "n8n Content Automation (Soon will be uploaded)",
     description:
       "Workflow automation system that orchestrates content creation, scheduling, and distribution across multiple platforms with AI-powered enhancements.",
     tags: ["n8n", "Workflow", "LLM", "Automation"],
@@ -33,7 +33,7 @@ const projectsDataEn = [
   },
   {
     id: 4,
-    title: "Fiori + Node.js Full-Stack",
+    title: "Fiori + Node.js Full-Stack (Soon will be uploaded)",
     description:
       "Modern full-stack application combining SAP Fiori frontend with Node.js backend, MongoDB database, and RESTful API architecture.",
     tags: ["SAP Fiori", "Node.js", "REST API", "MongoDB"],
