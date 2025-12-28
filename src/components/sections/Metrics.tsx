@@ -1,15 +1,24 @@
 import { motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { metricsData } from "@/data/content";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Metrics = () => {
+  const { t } = useLanguage();
+
+  const metricsData = [
+    { value: "10+", label: t("metrics.projects") },
+    { value: "50+", label: t("metrics.automations") },
+    { value: "2", label: t("metrics.certifications") },
+    { value: "∞", label: t("metrics.ideas") },
+  ];
+
   return (
     <section className="py-20 px-4">
       <div className="max-w-5xl mx-auto">
         <SectionHeader
-          handwritten="the impact"
-          title="By the Numbers"
+          handwritten={t("metrics.handwritten")}
+          title={t("metrics.title")}
         />
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
