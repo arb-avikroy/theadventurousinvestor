@@ -76,7 +76,7 @@ export const Hero = () => {
           transition={{ duration: 1, delay: 1.2 }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2"
         >
-      <!--    <ArrowDown className="h-6 w-6 text-primary animate-bounce" /> -->
+      {/* <ArrowDown className="h-6 w-6 text-primary animate-bounce" />  */} 
         </motion.div>
       </div>
     </section>
