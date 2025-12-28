@@ -2,16 +2,145 @@ import { motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/button";
-import { skillsData } from "@/data/skills";
 import { Zap } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+
+const skillsDataEn = [
+  {
+    category: "SAP & Enterprise",
+    items: [
+      "SAP Fiori Developer (Certified)",
+      "SAP Build Developer (Certified)",
+      "SAPUI5 / Fiori Elements",
+      "OData Integration",
+      "Process Automation",
+    ],
+  },
+  {
+    category: "Backend & Databases",
+    items: [
+      "Node.js / Express",
+      "MongoDB / SQL",
+      "REST API Design",
+      "Cloud Services",
+      "SAP ABAP",
+    ],
+  },
+  {
+    category: "Automation & AI",
+    items: [
+      "n8n Workflows",
+      "LLM Integration",
+      "Custom GPTs",
+      "Prompt Engineering",
+      "AI Pipelines",
+    ],
+  },
+  {
+    category: "Data & Analytics",
+    items: [
+      "Power BI",
+      "Data Visualization",
+      "Excel Automation",
+      "Report Building",
+      "Business Intelligence",
+    ],
+  },
+  {
+    category: "Content & Video",
+    items: [
+      "Video Production",
+      "Canva Design",
+      "AI Video Generation",
+      "Technical Writing",
+      "Storytelling",
+    ],
+  },
+  {
+    category: "Tools & Platforms",
+    items: [
+      "Microsoft 365",
+      "GitHub / Git",
+      "VS Code",
+      "Figma",
+      "Cloud Platforms",
+    ],
+  },
+];
+
+const skillsDataHi = [
+  {
+    category: "SAP और एंटरप्राइज",
+    items: [
+      "SAP Fiori डेवलपर (प्रमाणित)",
+      "SAP Build डेवलपर (प्रमाणित)",
+      "SAPUI5 / Fiori Elements",
+      "OData इंटीग्रेशन",
+      "प्रोसेस ऑटोमेशन",
+    ],
+  },
+  {
+    category: "बैकएंड और डेटाबेस",
+    items: [
+      "Node.js / Express",
+      "MongoDB / SQL",
+      "REST API डिज़ाइन",
+      "क्लाउड सर्विसेज",
+      "SAP ABAP",
+    ],
+  },
+  {
+    category: "ऑटोमेशन और AI",
+    items: [
+      "n8n वर्कफ़्लो",
+      "LLM इंटीग्रेशन",
+      "कस्टम GPTs",
+      "प्रॉम्प्ट इंजीनियरिंग",
+      "AI पाइपलाइन्स",
+    ],
+  },
+  {
+    category: "डेटा और एनालिटिक्स",
+    items: [
+      "Power BI",
+      "डेटा विज़ुअलाइज़ेशन",
+      "Excel ऑटोमेशन",
+      "रिपोर्ट बिल्डिंग",
+      "बिज़नेस इंटेलिजेंस",
+    ],
+  },
+  {
+    category: "कंटेंट और वीडियो",
+    items: [
+      "वीडियो प्रोडक्शन",
+      "Canva डिज़ाइन",
+      "AI वीडियो जेनरेशन",
+      "टेक्निकल राइटिंग",
+      "स्टोरीटेलिंग",
+    ],
+  },
+  {
+    category: "टूल्स और प्लेटफॉर्म्स",
+    items: [
+      "Microsoft 365",
+      "GitHub / Git",
+      "VS Code",
+      "Figma",
+      "क्लाउड प्लेटफॉर्म्स",
+    ],
+  },
+];
 
 export const SkillsSnapshot = () => {
+  const { t, language } = useLanguage();
+  const skillsData = language === "hi" ? skillsDataHi : skillsDataEn;
+
   return (
-    <section id="skills" className="py-20 px-4 bg-charcoal/30">
+    <section id="skills" className="py-20 px-4 bg-secondary/50">
       <div className="max-w-6xl mx-auto">
         <SectionHeader
-          handwritten="what i do"
-          title="Skills & Expertise"
+          handwritten={t("skills.handwritten")}
+          title={t("skills.title")}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -50,7 +179,7 @@ export const SkillsSnapshot = () => {
             onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
           >
             <Zap className="mr-2 h-4 w-4" />
-            See Skills in Action
+            {t("skills.seeInAction")}
           </Button>
         </motion.div>
       </div>

@@ -1,15 +1,28 @@
 import { motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { techStackData } from "@/data/content";
+import { useLanguage } from "@/contexts/LanguageContext";
+
+const techStackData = [
+  { icon: "⚙️", label: "SAP" },
+  { icon: "📦", label: "Node.js" },
+  { icon: "🍃", label: "MongoDB" },
+  { icon: "📊", label: "Power BI" },
+  { icon: "🔗", label: "n8n" },
+  { icon: "🎨", label: "Canva" },
+  { icon: "🤖", label: "LLMs" },
+  { icon: "💼", label: "M365" },
+];
 
 export const TechStack = () => {
+  const { t } = useLanguage();
+
   return (
-    <section className="py-20 px-4 bg-charcoal/30">
+    <section className="py-20 px-4 bg-secondary/50">
       <div className="max-w-4xl mx-auto">
         <SectionHeader
-          handwritten="the toolkit"
-          title="Technologies & Tools"
+          handwritten={t("techStack.handwritten")}
+          title={t("techStack.title")}
         />
 
         <GlassCard className="p-8">

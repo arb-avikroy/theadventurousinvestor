@@ -2,20 +2,24 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#lab", label: "Lab" },
-  { href: "#content", label: "Content" },
-  { href: "#contact", label: "Contact" },
-];
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useLanguage();
+
+  const navLinks = [
+    { href: "#about", label: t("nav.about") },
+    { href: "#skills", label: t("nav.skills") },
+    { href: "#projects", label: t("nav.projects") },
+    { href: "#lab", label: t("nav.lab") },
+    { href: "#content", label: t("nav.content") },
+    { href: "#contact", label: t("nav.contact") },
+  ];
 
   const handleNavClick = (href: string) => {
     setIsOpen(false);
@@ -44,7 +48,7 @@ export const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
               <button
                 key={link.href}
@@ -54,16 +58,24 @@ export const Navbar = () => {
                 {link.label}
               </button>
             ))}
+            <div className="flex items-center space-x-3 ml-4">
+              <LanguageSwitcher />
+              <ThemeToggle />
+            </div>
           </div>
 
           {/* Mobile menu button */}
-          <button
-            className="md:hidden text-foreground"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="flex items-center space-x-3 md:hidden">
+            <LanguageSwitcher />
+            <ThemeToggle />
+            <button
+              className="text-foreground"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </div>
 

@@ -3,33 +3,30 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const AboutPreview = () => {
+  const { t } = useLanguage();
+
   return (
     <section id="about" className="py-20 px-4">
       <div className="max-w-4xl mx-auto">
         <SectionHeader
-          handwritten="who am i?"
-          title="The Explorer"
+          handwritten={t("about.handwritten")}
+          title={t("about.title")}
         />
 
         <GlassCard className="p-8 md:p-10">
           <div className="space-y-4 text-muted-foreground leading-relaxed">
             <p>
-              I'm a <span className="text-foreground font-medium">multidisciplinary technologist</span> who 
-              thrives at the intersection of enterprise systems, artificial intelligence, and creative storytelling. 
-              My journey has taken me from corporate SAP implementations to building AI-powered content pipelines.
+              {t("about.paragraph1")} <span className="text-foreground font-medium">{t("about.multidisciplinary")}</span> {t("about.paragraph1End")}
             </p>
             <p>
-              By day, I architect solutions using <span className="text-primary">SAP Fiori, UI5</span>, 
-              <span className="text-primary">SAP ABAP, Node.js</span>, and workflow automation tools like n8n. 
-              By night, I experiment with LLMs, create educational content, and explore the endless 
-              possibilities of AI-driven creation.
+              {t("about.paragraph2")} <span className="text-primary">{t("about.sapFiori")}</span>,{" "}
+              <span className="text-primary">{t("about.sapAbap")}</span>{t("about.paragraph2End")}
             </p>
             <p>
-              <span className="font-caveat text-xl text-primary">The Adventurous Investor</span> is my 
-              personal brand—a space where technical expertise meets creative exploration, where every 
-              project is an adventure, and where the journey matters as much as the destination. - Avik Roy Barman
+              <span className="font-caveat text-xl text-primary">{t("about.brandName")}</span> {t("about.paragraph3")} {t("about.author")}
             </p>
           </div>
 
@@ -45,7 +42,7 @@ export const AboutPreview = () => {
               className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               <MessageCircle className="mr-2 h-4 w-4" />
-              Let's Connect
+              {t("about.connect")}
             </Button>
           </motion.div>
         </GlassCard>

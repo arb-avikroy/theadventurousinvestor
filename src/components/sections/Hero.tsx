@@ -1,9 +1,12 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 import mountainHero from "@/assets/mountain-hero.png";
 
 export const Hero = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
       {/* Mountain background image */}
@@ -23,7 +26,7 @@ export const Hero = () => {
           transition={{ duration: 0.8 }}
         >
           <span className="font-caveat text-2xl md:text-3xl text-primary">
-            the journey continues...
+            {t("hero.tagline")}
           </span>
         </motion.div>
 
@@ -31,11 +34,11 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mt-4 leading-tight"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mt-4 leading-tight text-foreground"
         >
-          Building Intelligent Systems.{" "}
+          {t("hero.headline1")}{" "}
           <br className="hidden sm:block" />
-          Exploring Ideas. Sharing the Journey.
+          {t("hero.headline2")}
         </motion.h1>
 
         <motion.p
@@ -44,7 +47,7 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-muted-foreground text-sm md:text-base tracking-[0.2em] md:tracking-[0.3em] mt-6 uppercase"
         >
-          SAP • AI • Automation • Content • Storytelling
+          {t("hero.subtitle")}
         </motion.p>
 
         <motion.div
@@ -59,14 +62,15 @@ export const Hero = () => {
             onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
           >
             <Sparkles className="mr-2 h-4 w-4" />
-            View My Work
+            {t("hero.viewWork")}
           </Button>
           <Button
             size="lg"
             variant="outline"
+            className="border-primary/40 text-foreground hover:bg-primary/10"
             onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
           >
-            Explore the Journey
+            {t("hero.exploreJourney")}
           </Button>
         </motion.div>
 

@@ -1,4 +1,5 @@
 import { Linkedin, Github, Youtube, Instagram } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const socialLinks = [
   { icon: Linkedin, href: "https://www.linkedin.com/in/avik-barman/", label: "LinkedIn" },
@@ -8,15 +9,17 @@ const socialLinks = [
 ];
 
 export const Footer = () => {
+  const { t } = useLanguage();
+
   return (
-    <footer className="bg-charcoal border-t border-glass-border">
+    <footer className="bg-secondary border-t border-glass-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center">
           <span className="font-caveat text-2xl text-primary">
             the adventurous investor
           </span>
           <p className="text-muted-foreground mt-3 max-w-md mx-auto">
-            Building intelligent systems. Exploring ideas. Sharing the journey.
+            {t("footer.tagline")}
           </p>
           
           <div className="flex justify-center space-x-6 mt-6">
@@ -35,7 +38,7 @@ export const Footer = () => {
           </div>
           
           <p className="text-muted-foreground text-sm mt-8">
-            © 2026 Avik Barman. All rights reserved.
+            {t("footer.copyright")}
           </p>
         </div>
       </div>

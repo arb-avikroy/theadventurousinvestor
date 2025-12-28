@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Linkedin, Github, Youtube, Instagram, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const socialLinks = [
   { icon: Linkedin, href: "https://www.linkedin.com/in/avik-barman/", label: "LinkedIn" },
@@ -21,6 +22,7 @@ export const Contact = () => {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,8 +32,8 @@ export const Contact = () => {
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     toast({
-      title: "Message sent!",
-      description: "Thanks for reaching out. I'll get back to you soon.",
+      title: t("contact.successTitle"),
+      description: t("contact.successDescription"),
     });
     
     setName("");
@@ -41,11 +43,11 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 px-4 bg-charcoal/30">
+    <section id="contact" className="py-20 px-4 bg-secondary/50">
       <div className="max-w-2xl mx-auto">
         <SectionHeader
-          handwritten="let's connect"
-          title="Start the Conversation"
+          handwritten={t("contact.handwritten")}
+          title={t("contact.title")}
         />
 
         <motion.p
@@ -55,14 +57,14 @@ export const Contact = () => {
           viewport={{ once: true }}
           className="text-center text-muted-foreground mb-10 font-caveat text-xl"
         >
-          "Let's build, automate, or create something meaningful."
+          {t("contact.quote")}
         </motion.p>
 
         <GlassCard className="p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <Input
-                placeholder="Your Name"
+                placeholder={t("contact.namePlaceholder")}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -72,7 +74,7 @@ export const Contact = () => {
             <div>
               <Input
                 type="email"
-                placeholder="Your Email"
+                placeholder={t("contact.emailPlaceholder")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -81,7 +83,7 @@ export const Contact = () => {
             </div>
             <div>
               <Textarea
-                placeholder="Your Message"
+                placeholder={t("contact.messagePlaceholder")}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 required
@@ -94,7 +96,7 @@ export const Contact = () => {
               className="w-full bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-[0_0_30px_hsl(30_45%_64%_/_0.4)]"
             >
               <Send className="mr-2 h-4 w-4" />
-              {isSubmitting ? "Sending..." : "Send Message"}
+              {isSubmitting ? t("contact.sending") : t("contact.send")}
             </Button>
           </form>
         </GlassCard>

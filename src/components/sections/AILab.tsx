@@ -3,33 +3,31 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Bot } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const AILab = () => {
+  const { t } = useLanguage();
+
   return (
-    <section id="lab" className="py-20 px-4 bg-charcoal/30">
+    <section id="lab" className="py-20 px-4 bg-secondary/50">
       <div className="max-w-4xl mx-auto">
         <SectionHeader
-          handwritten="the lab"
-          title="AI & Experimentation"
+          handwritten={t("lab.handwritten")}
+          title={t("lab.title")}
         />
 
         <GlassCard className="p-8 md:p-10">
           <div className="flex items-center gap-3 mb-6">
             <Bot className="h-8 w-8 text-primary" />
-            <h3 className="text-xl font-semibold text-primary">Building with Intelligence</h3>
+            <h3 className="text-xl font-semibold text-primary">{t("lab.subtitle")}</h3>
           </div>
           
           <div className="space-y-4 text-muted-foreground leading-relaxed">
             <p>
-              The lab is where ideas become experiments. I build <span className="text-foreground">custom GPTs</span> for 
-              specific workflows, engineer prompts that unlock creative possibilities, and create pipelines that 
-              transform concepts into content at scale.
+              {t("lab.paragraph1")} <span className="text-foreground">{t("lab.customGPTs")}</span> {t("lab.paragraph1End")}
             </p>
             <p>
-              My work spans <span className="text-primary">multi-model LLM orchestration</span>—combining the 
-              strengths of different AI models for tasks ranging from video script generation to automated 
-              research synthesis. Every experiment teaches something new about the intersection of 
-              human creativity and machine intelligence.
+              {t("lab.paragraph2")} <span className="text-primary">{t("lab.multiModel")}</span>{t("lab.paragraph2End")}
             </p>
           </div>
 
@@ -44,7 +42,7 @@ export const AILab = () => {
               className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               <Sparkles className="mr-2 h-4 w-4" />
-              Explore AI Projects
+              {t("lab.explore")}
             </Button>
           </motion.div>
         </GlassCard>
