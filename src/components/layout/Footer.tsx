@@ -1,10 +1,10 @@
 import { Linkedin, Github, Youtube, Instagram } from "lucide-react";
 
 const socialLinks = [
-  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: Github, href: "https://github.com", label: "GitHub" },
-  { icon: Youtube, href: "https://youtube.com", label: "YouTube" },
-  { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/avik-barman/", label: "LinkedIn" },
+  { icon: Github, href: "https://github.com/arb-avikroy", label: "GitHub" },
+  { icon: Youtube, href: "https://youtube.com/@theadventurousinvestor", label: "YouTube" },
+  { icon: Instagram, href: "https://instagram.com/theadventurousinvestor", label: "Instagram" },
 ];
 
 export const Footer = () => {
@@ -35,7 +35,7 @@ export const Footer = () => {
           </div>
           
           <p className="text-muted-foreground text-sm mt-8">
-            © 2025 Avik Barman. All rights reserved.
+            © 2026 Avik Barman. All rights reserved.
           </p>
         </div>
       </div>

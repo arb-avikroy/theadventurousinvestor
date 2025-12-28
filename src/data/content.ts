@@ -22,7 +22,7 @@ export const contentData = [
 ];
 
 export const techStackData = [
-  { icon: "⚙️", label: "SAP" },
+  { icon: "⚙️", label: "SAP UI/ABAP" },
   { icon: "📦", label: "Node.js" },
   { icon: "🍃", label: "MongoDB" },
   { icon: "📊", label: "Power BI" },
@@ -34,7 +34,7 @@ export const techStackData = [
 
 export const metricsData = [
   { value: "10+", label: "Projects Completed" },
-  { value: "50+", label: "Automations Built" },
+  { value: "10+", label: "Automations Built" },
   { value: "2", label: "SAP Certifications" },
   { value: "∞", label: "Ideas Explored" }
 ];

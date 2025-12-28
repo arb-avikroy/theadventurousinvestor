@@ -2,9 +2,9 @@ export const skillsData = [
   {
     category: "SAP & Enterprise",
     items: [
-      "SAP Fiori Developer (Certified)",
+      "SAP UI5/Fiori Developer (Certified)",
       "SAP Build Developer (Certified)",
-      "SAPUI5 / Fiori Elements",
+      "SAP Fiori Elements",
       "OData Integration",
       "Process Automation"
     ]
