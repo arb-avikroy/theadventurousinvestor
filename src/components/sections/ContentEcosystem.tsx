@@ -43,6 +43,7 @@ export const ContentEcosystem = () => {
           <Button
             variant="outline"
             className="border-primary/40 text-primary hover:bg-primary/10"
+             onClick={() => window.open("https://www.youtube.com/@theadventurousinvestor", "_blank")}
           >
             <Play className="mr-2 h-4 w-4" />
             Watch & Read More

@@ -53,7 +53,7 @@ export const FeaturedProjects = () => {
             className="border-primary/40 text-primary hover:bg-primary/10"
             asChild
           >
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/arb-avikroy" target="_blank" rel="noopener noreferrer">
               <Github className="mr-2 h-4 w-4" />
               View All Projects on GitHub
             </a>

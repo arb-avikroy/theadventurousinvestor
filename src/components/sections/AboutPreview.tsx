@@ -29,7 +29,7 @@ export const AboutPreview = () => {
             <p>
               <span className="font-caveat text-xl text-primary">The Adventurous Investor</span> is my 
               personal brand—a space where technical expertise meets creative exploration, where every 
-              project is an adventure, and where the journey matters as much as the destination.
+              project is an adventure, and where the journey matters as much as the destination. - Avik Roy Barman
             </p>
           </div>
 
