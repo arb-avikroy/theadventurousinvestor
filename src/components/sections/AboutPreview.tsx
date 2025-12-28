@@ -21,8 +21,8 @@ export const AboutPreview = () => {
               My journey has taken me from corporate SAP implementations to building AI-powered content pipelines.
             </p>
             <p>
-              By day, I architect solutions using <span className="text-primary">SAP Fiori</span>, 
-              <span className="text-primary"> Node.js</span>, and workflow automation tools like n8n. 
+              By day, I architect solutions using <span className="text-primary">SAP Fiori, UI5</span>, 
+              <span className="text-primary">SAP ABAP, Node.js</span>, and workflow automation tools like n8n. 
               By night, I experiment with LLMs, create educational content, and explore the endless 
               possibilities of AI-driven creation.
             </p>
