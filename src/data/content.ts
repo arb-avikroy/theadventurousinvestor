@@ -22,7 +22,7 @@ export const contentData = [
 ];
 
 export const techStackData = [
-  { icon: "⚙️", label: "SAP UI/ABAP " },
+  { icon: "⚙️", label: "SAP UI5/ABAP " },
   { icon: "📦", label: "Node.js" },
   { icon: "🍃", label: "MongoDB" },
   { icon: "📊", label: "Power BI" },

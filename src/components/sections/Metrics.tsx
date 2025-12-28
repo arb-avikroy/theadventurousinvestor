@@ -8,7 +8,7 @@ export const Metrics = () => {
 
   const metricsData = [
     { value: "10+", label: t("metrics.projects") },
-    { value: "50+", label: t("metrics.automations") },
+    { value: "10+", label: t("metrics.automations") },
     { value: "2", label: t("metrics.certifications") },
     { value: "∞", label: t("metrics.ideas") },
   ];

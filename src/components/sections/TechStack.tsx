@@ -4,7 +4,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const techStackData = [
-  { icon: "⚙️", label: "SAP" },
+  { icon: "⚙️", label: "SAP UI5/ABAP" },
   { icon: "📦", label: "Node.js" },
   { icon: "🍃", label: "MongoDB" },
   { icon: "📊", label: "Power BI" },
