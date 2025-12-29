@@ -47,6 +47,7 @@ export const en = {
     handwritten: "what i've built",
     title: "Featured Projects",
     viewAll: "View All Projects on GitHub",
+    otherProjects: "Other Projects",
   },
   lab: {
     handwritten: "the lab",
@@ -63,7 +64,8 @@ export const en = {
   contentSection: {
     handwritten: "content universe",
     title: "The Adventurous Investor",
-    watchMore: "Watch & Read More",
+    watchMore: "YouTube Channel",
+    watchRead: "Watch & Read More",
   },
   techStack: {
     handwritten: "the toolkit",

@@ -2,8 +2,9 @@ import { motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/button";
-import { Play } from "lucide-react";
+import { Play, BookOpen } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "react-router-dom";
 
 const contentDataEn = [
   {
@@ -95,8 +96,18 @@ export const ContentEcosystem = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
           viewport={{ once: true }}
-          className="text-center mt-10"
+          className="flex flex-wrap justify-center gap-4 mt-10"
         >
+          <Button
+            variant="outline"
+            className="border-primary/40 text-primary hover:bg-primary/10"
+            asChild
+          >
+            <Link to="/watch-read">
+              <BookOpen className="mr-2 h-4 w-4" />
+              {t("contentSection.watchRead")}
+            </Link>
+          </Button>
           <Button
             variant="outline"
             className="border-primary/40 text-primary hover:bg-primary/10"
