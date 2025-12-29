@@ -95,6 +95,6 @@ export const contentData = {
   ],
   blogs: [
     { id: "blog-1", title: { en: "Artificial Intelligence in SAP: Transforming Enterprise Intelligence", hi: "एंटरप्राइज इंटेलिजेंस में क्रांति ला रही है आर्टिफिशियल इंटेलिजेंस इन SAP" }, excerpt: { en: "Discover how Artificial Intelligence in SAP is revolutionizing business processes, boosting efficiency, and driving intelligent automation across industries", hi: "जानिए कैसे SAP में आर्टिफिशियल इंटेलिजेंस व्यापारिक प्रक्रियाओं को स्मार्ट और कुशल बना रही है।" }, readTime: "~11 mins", date: "2025-12-30", tags: ["AI", "Enterprise", "SAP"] },
-    { id: "blog-2", title: { en: "SAP BTP Guide", hi: "SAP BTP गाइड" }, excerpt: { en: "Complete guide to SAP BTP.", hi: "SAP BTP की पूर्ण गाइड।" }, readTime: "15 min", date: "2024-02-10", tags: ["SAP", "BTP"] },
+    { id: "blog-2", title: { en: "SAP BTP Guide (Updating)", hi: "SAP BTP गाइड" }, excerpt: { en: "Complete guide to SAP BTP.", hi: "SAP BTP की पूर्ण गाइड।" }, readTime: "15 min", date: "2024-02-10", tags: ["SAP", "BTP"] },
   ],
 };
