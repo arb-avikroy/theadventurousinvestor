@@ -24,23 +24,46 @@ export const Contact = () => {
   const { toast } = useToast();
   const { t } = useLanguage();
 
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
+    
+  //   // Simulate form submission
+  //   await new Promise(resolve => setTimeout(resolve, 1000));
+    
+  //   toast({
+  //     title: t("contact.successTitle"),
+  //     description: t("contact.successDescription"),
+  //   });
+    
+  //   setName("");
+  //   setEmail("");
+  //   setMessage("");
+  //   setIsSubmitting(false);
+  // };
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: t("contact.successTitle"),
-      description: t("contact.successDescription"),
+  e.preventDefault();
+  setIsSubmitting(true);
+   
+  try {
+    await fetch("https://telegram-contact-api.arb-avikroy.workers.dev/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        email,
+        message
+      })
     });
-    
     setName("");
     setEmail("");
     setMessage("");
+  } catch (err) {
+    console.error(err);
+  } finally {
     setIsSubmitting(false);
-  };
+  }
+};
 
   return (
     <section id="contact" className="py-20 px-4 bg-secondary/50">
