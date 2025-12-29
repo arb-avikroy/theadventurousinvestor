@@ -12,6 +12,9 @@ import OtherProjects from "./pages/OtherProjects";
 import ExploreAI from "./pages/ExploreAI";
 import WatchRead from "./pages/WatchRead";
 const queryClient = new QueryClient();
+import ScrollToTop from './components/ScrollToTop';
+
+
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -21,6 +24,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+          <ScrollToTop />
       {/* <BrowserRouter basename="/theadventurousinvestor/">  when using github pages*/}
             <Routes>
               <Route path="/" element={<Index />} />

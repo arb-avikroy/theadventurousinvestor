@@ -122,16 +122,16 @@ export const FeaturedProjects = () => {
           viewport={{ once: true }}
           className="flex flex-wrap justify-center gap-4 mt-10"
         >
+          <Link to="/other-projects">
           <Button
             variant="outline"
-            className="border-primary/40 text-primary hover:bg-primary/10"
-            asChild
-          >
-            <Link to="/other-projects">
+            className="border-primary/40 text-primary hover:bg-primary/10"  
+          >     
               <FolderOpen className="mr-2 h-4 w-4" />
               {t("projects.otherProjects")}
-            </Link>
+            
           </Button>
+          </Link>
           <Button
             variant="outline"
             className="border-primary/40 text-primary hover:bg-primary/10"
