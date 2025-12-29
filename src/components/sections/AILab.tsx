@@ -4,6 +4,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Bot } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "react-router-dom";
 
 export const AILab = () => {
   const { t } = useLanguage();
@@ -40,9 +41,12 @@ export const AILab = () => {
           >
             <Button
               className="bg-primary text-primary-foreground hover:bg-primary/90"
+              asChild
             >
-              <Sparkles className="mr-2 h-4 w-4" />
-              {t("lab.explore")}
+              <Link to="/explore-ai">
+                <Sparkles className="mr-2 h-4 w-4" />
+                {t("lab.explore")}
+              </Link>
             </Button>
           </motion.div>
         </GlassCard>

@@ -47,6 +47,7 @@ export const hi = {
     handwritten: "मैंने क्या बनाया",
     title: "फीचर्ड प्रोजेक्ट्स",
     viewAll: "GitHub पर सभी प्रोजेक्ट्स देखें",
+    otherProjects: "अन्य प्रोजेक्ट्स",
   },
   lab: {
     handwritten: "लैब",
@@ -63,7 +64,8 @@ export const hi = {
   contentSection: {
     handwritten: "कंटेंट यूनिवर्स",
     title: "द एडवेंचरस इन्वेस्टर",
-    watchMore: "देखें और पढ़ें",
+    watchMore: "YouTube चैनल",
+    watchRead: "देखें और पढ़ें",
   },
   techStack: {
     handwritten: "टूलकिट",
