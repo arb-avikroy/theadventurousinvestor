@@ -78,12 +78,12 @@ export const aiProjects = {
     { id: "gpt-career", name: { en: "Youtube Script Writer", hi: "यूट्यूब स्क्रिप्ट राइटर" }, description: { en: "Consistent YouTube scriptwriting Gem for your channel", hi: "आपके चैनल के लिए लगातार YouTube स्क्रिप्टराइटिंग का बेहतरीन तरीका।" }, link: "https://gemini.google.com/gem/1mm5mzIjQxM00RQNo84iNBRWiruXVZfZM?usp=sharing", type: "Custom GPT/Gem" },
   ],
   projects: [
-    { id: "ai-content", name: { en: "AI Content Generator", hi: "AI कंटेंट जेनरेटर" }, description: { en: "Multi-platform content generation.", hi: "मल्टी-प्लेटफॉर्म कंटेंट जेनरेशन।" }, status: "Active", tech: ["GPT-4", "Python"] },
-    { id: "voice-clone", name: { en: "Voice Clone Studio", hi: "वॉइस क्लोन स्टूडियो" }, description: { en: "Natural voice clones.", hi: "प्राकृतिक वॉइस क्लोन।" }, status: "Beta", tech: ["ElevenLabs", "React"] },
+    { id: "ai-content", name: { en: "AI Content Generator (Come here later)", hi: "AI कंटेंट जेनरेटर" }, description: { en: "Multi-platform content generation.", hi: "मल्टी-प्लेटफॉर्म कंटेंट जेनरेशन।" }, status: "Active", tech: ["GPT-4", "Python"] },
+    { id: "voice-clone", name: { en: "Voice Clone Studio (Come here later)", hi: "वॉइस क्लोन स्टूडियो" }, description: { en: "Natural voice clones.", hi: "प्राकृतिक वॉइस क्लोन।" }, status: "Beta", tech: ["ElevenLabs", "React"] },
   ],
   articles: [
-    { id: "intro-llm", title: { en: "Introduction to LLMs", hi: "LLMs का परिचय" }, excerpt: { en: "Guide to understanding LLMs.", hi: "LLMs को समझने की गाइड।" }, readTime: "8 min", date: "2024-01-15" },
-    { id: "ai-sap", title: { en: "AI in SAP Ecosystem", hi: "SAP में AI इंटीग्रेशन" }, excerpt: { en: "AI transforming SAP.", hi: "AI SAP को बदल रहा है।" }, readTime: "12 min", date: "2024-02-20" },
+    { id: "intro-llm", title: { en: "Introduction to LLMs (Updating)", hi: "LLMs का परिचय" }, excerpt: { en: "Guide to understanding LLMs.", hi: "LLMs को समझने की गाइड।" }, readTime: "8 min", date: "2024-01-15" },
+    { id: "ai-sap", title: { en: "AI in SAP Ecosystem (Updating)", hi: "SAP में AI इंटीग्रेशन" }, excerpt: { en: "AI transforming SAP.", hi: "AI SAP को बदल रहा है।" }, readTime: "12 min", date: "2024-02-20" },
   ],
 };
 
