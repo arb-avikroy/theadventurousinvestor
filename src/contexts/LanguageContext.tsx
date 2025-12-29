@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, type Context } from "react";
 import { en } from "@/i18n/translations/en";
 import { hi } from "@/i18n/translations/hi";
 
@@ -12,7 +12,12 @@ interface LanguageContextType {
   t: (key: string) => string;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+// Persist the context instance across HMR to avoid "hook used outside provider" crashes
+// when Fast Refresh reloads this module but keeps the existing provider mounted.
+const globalAny = globalThis as any;
+const LanguageContext: Context<LanguageContextType | undefined> =
+  globalAny.__lovable_language_context__ ??
+  (globalAny.__lovable_language_context__ = createContext<LanguageContextType | undefined>(undefined));
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguageState] = useState<Language>(() => {
