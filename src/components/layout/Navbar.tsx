@@ -40,7 +40,7 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-[100] bg-background/80 backdrop-blur-lg border-b border-glass-border">
+    <nav className="fixed top-0 left-0 right-0 z-[9999] bg-background/80 backdrop-blur-lg border-b border-glass-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="font-caveat text-2xl text-primary hover:text-primary/80 transition-colors">
@@ -86,7 +86,7 @@ export const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/95 backdrop-blur-lg border-b border-glass-border z-[100]"
+            className="md:hidden bg-background/95 backdrop-blur-lg border-b border-glass-border z-[9999]"
           >
             <div className="px-4 py-4 space-y-3">
               {navLinks.map((link) => (
