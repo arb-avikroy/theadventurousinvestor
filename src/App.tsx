@@ -7,7 +7,10 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-
+import ProjectDetail from "./pages/ProjectDetail";
+import OtherProjects from "./pages/OtherProjects";
+import ExploreAI from "./pages/ExploreAI";
+import WatchRead from "./pages/WatchRead";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -21,7 +24,10 @@ const App = () => (
       {/* <BrowserRouter basename="/theadventurousinvestor/">  when using github pages*/}
             <Routes>
               <Route path="/" element={<Index />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="/projects/:slug" element={<ProjectDetail />} />
+              <Route path="/other-projects" element={<OtherProjects />} />
+              <Route path="/explore-ai" element={<ExploreAI />} />
+              <Route path="/watch-read" element={<WatchRead />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
