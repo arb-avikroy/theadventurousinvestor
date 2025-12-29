@@ -13,7 +13,7 @@ import ReactPlayer from 'react-player';
 
 const WatchRead = () => {
   const { language } = useLanguage();
-  const [activeTab, setActiveTab] = useState("videos");
+  const [activeTab, setActiveTab] = useState("blogs");
 
   return (
     <Layout>
@@ -44,14 +44,15 @@ const WatchRead = () => {
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
-                <TabsTrigger value="videos" className="flex items-center gap-2">
-                  <Play className="h-4 w-4" />
-                  {language === "hi" ? "यूट्यूब वीडियो" : "YouTube Videos"}
-                </TabsTrigger>
                 <TabsTrigger value="blogs" className="flex items-center gap-2">
                   <BookOpen className="h-4 w-4" />
                   {language === "hi" ? "ब्लॉग" : "Blogs"}
                 </TabsTrigger>
+                <TabsTrigger value="videos" className="flex items-center gap-2">
+                  <Play className="h-4 w-4" />
+                  {language === "hi" ? "यूट्यूब वीडियो" : "YouTube Videos"}
+                </TabsTrigger>
+                
               </TabsList>
 
               <TabsContent value="videos">
@@ -196,8 +197,9 @@ const WatchRead = () => {
                           variant="ghost"
                           size="sm"
                           className="text-primary hover:bg-primary/10"
-                        >
+                        > <Link to={`/blog/${blog.id}`}>
                           {language === "hi" ? "पढ़ें" : "Read"}
+                          </Link>
                         </Button>
                       </div>
                     </GlassCard>

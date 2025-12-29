@@ -74,8 +74,8 @@ export const otherProjects: Project[] = [
 
 export const aiProjects = {
   community: [
-    { id: "gpt-sap", name: { en: "SAP Consultant GPT", hi: "SAP कंसल्टेंट GPT" }, description: { en: "Custom GPT for SAP queries.", hi: "SAP प्रश्नों के लिए कस्टम GPT।" }, link: "#", type: "Custom GPT" },
-    { id: "gpt-career", name: { en: "Tech Career Advisor", hi: "टेक करियर एडवाइज़र" }, description: { en: "AI career guidance.", hi: "AI करियर मार्गदर्शन।" }, link: "#", type: "Custom GPT" },
+    { id: "gpt-sap", name: { en: "SAP Consultant GPT (coming soon)", hi: "SAP कंसल्टेंट GPT (जल्द आ रहा है)" }, description: { en: "Custom GPT for SAP queries.", hi: "SAP प्रश्नों के लिए कस्टम GPT।" }, link: "https://www.chatgpt.com", type: "Custom GPT" },
+    { id: "gpt-career", name: { en: "Youtube Script Writer", hi: "यूट्यूब स्क्रिप्ट राइटर" }, description: { en: "Consistent YouTube scriptwriting Gem for your channel", hi: "आपके चैनल के लिए लगातार YouTube स्क्रिप्टराइटिंग का बेहतरीन तरीका।" }, link: "https://gemini.google.com/gem/1mm5mzIjQxM00RQNo84iNBRWiruXVZfZM?usp=sharing", type: "Custom GPT/Gem" },
   ],
   projects: [
     { id: "ai-content", name: { en: "AI Content Generator", hi: "AI कंटेंट जेनरेटर" }, description: { en: "Multi-platform content generation.", hi: "मल्टी-प्लेटफॉर्म कंटेंट जेनरेशन।" }, status: "Active", tech: ["GPT-4", "Python"] },
@@ -94,7 +94,7 @@ export const contentData = {
     { id: "N4T9FVcaHrk", title: { en: "Get Lovable.dev Pro for FREE (Limited-Time Trick)", hi: "Lovable.dev Pro को मुफ़्त में पाएं (सीमित समय के लिए ऑफर)" }, description: { en: "Best AI tools for productivity.", hi: "उत्पादकता के लिए AI टूल्स।" }, thumbnail: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400", youtubeUrl: "https://youtube.com", duration: "20:45", views: "8.5K", date: "2025-12-26" },
   ],
   blogs: [
-    { id: "blog-1", title: { en: "The Future of Enterprise AI", hi: "एंटरप्राइज AI का भविष्य" }, excerpt: { en: "How AI is reshaping enterprise.", hi: "AI एंटरप्राइज को कैसे बदल रहा है।" }, readTime: "8 min", date: "2024-01-20", tags: ["AI", "Enterprise"] },
+    { id: "blog-1", title: { en: "Artificial Intelligence in SAP: Transforming Enterprise Intelligence", hi: "एंटरप्राइज इंटेलिजेंस में क्रांति ला रही है आर्टिफिशियल इंटेलिजेंस इन SAP" }, excerpt: { en: "Discover how Artificial Intelligence in SAP is revolutionizing business processes, boosting efficiency, and driving intelligent automation across industries", hi: "जानिए कैसे SAP में आर्टिफिशियल इंटेलिजेंस व्यापारिक प्रक्रियाओं को स्मार्ट और कुशल बना रही है।" }, readTime: "~11 mins", date: "2025-12-30", tags: ["AI", "Enterprise", "SAP"] },
     { id: "blog-2", title: { en: "SAP BTP Guide", hi: "SAP BTP गाइड" }, excerpt: { en: "Complete guide to SAP BTP.", hi: "SAP BTP की पूर्ण गाइड।" }, readTime: "15 min", date: "2024-02-10", tags: ["SAP", "BTP"] },
   ],
 };
