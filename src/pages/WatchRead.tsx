@@ -8,6 +8,8 @@ import { ArrowLeft, Play, BookOpen, Clock, Eye, Calendar, ExternalLink } from "l
 import { useLanguage } from "@/contexts/LanguageContext";
 import { contentData } from "@/data/projects";
 import { motion } from "framer-motion";
+import ReactPlayer from 'react-player';
+
 
 const WatchRead = () => {
   const { language } = useLanguage();
@@ -55,54 +57,84 @@ const WatchRead = () => {
               <TabsContent value="videos">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {contentData.videos.map((video, index) => (
-                    <GlassCard key={video.id} hoverable delay={index * 0.1} className="overflow-hidden">
-                      <div className="relative">
-                        <img
-                          src={video.thumbnail}
-                          alt={video.title[language]}
-                          className="w-full h-48 object-cover"
+                    <GlassCard key={video.id} className="overflow-hidden">
+
+                      <div className='player-wrapper'>
+                        <iframe
+                          width="100%"
+                          height="315"
+                          // 1. Correct URL structure (No double '?')
+                          src={`https://www.youtube.com/embed/${video.id}?rel=0&autoplay=1&mute=1&origin=${window.location.origin}`}
+                          title={video.title[language]}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                          // 2. CRITICAL: Tells the browser to identify your site to YouTube
+                          referrerPolicy="strict-origin-when-cross-origin"
+                          // 3. Optional: Helpful for React styling
+                          className="w-full rounded-lg"
                         />
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                          <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center">
-                            <Play className="h-8 w-8 text-primary-foreground ml-1" />
-                          </div>
-                        </div>
-                        <span className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
-                          {video.duration}
-                        </span>
                       </div>
                       <div className="p-5">
                         <h3 className="text-primary font-semibold text-lg mb-2">
                           {video.title[language]}
                         </h3>
-                        <p className="text-muted-foreground text-sm mb-4">
-                          {video.description[language]}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                            <span className="flex items-center gap-1">
-                              <Eye className="h-3 w-3" />
-                              {video.views}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Calendar className="h-3 w-3" />
-                              {video.date}
-                            </span>
-                          </div>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-primary/40 text-primary hover:bg-primary/10"
-                            asChild
-                          >
-                            <a href={video.youtubeUrl} target="_blank" rel="noopener noreferrer">
-                              <ExternalLink className="mr-1 h-3 w-3" />
-                              {language === "hi" ? "देखें" : "Watch"}
-                            </a>
-                          </Button>
+                        <div className="flex items-center justify-end">
+                          <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                            <Calendar className="h-3 w-3" />
+                            <p>Uploaded On</p>{video.date}
+                          </span>
                         </div>
                       </div>
                     </GlassCard>
+                    // <GlassCard key={video.id} hoverable delay={index * 0.1} className="overflow-hidden">
+                    //   <div className="relative">
+                    //     <img
+                    //       src={video.thumbnail}
+                    //       alt={video.title[language]}
+                    //       className="w-full h-48 object-cover"
+                    //     />
+                    //     <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                    //       <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center">
+                    //         <Play className="h-8 w-8 text-primary-foreground ml-1" />
+                    //       </div>
+                    //     </div>
+                    //     <span className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
+                    //       {video.duration}
+                    //     </span>
+                    //   </div>
+                    //   <div className="p-5">
+                    //     <h3 className="text-primary font-semibold text-lg mb-2">
+                    //       {video.title[language]}
+                    //     </h3>
+                    //     <p className="text-muted-foreground text-sm mb-4">
+                    //       {video.description[language]}
+                    //     </p>
+                    // <div className="flex items-center justify-between">
+                    //   <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                    //     <span className="flex items-center gap-1">
+                    //       <Eye className="h-3 w-3" />
+                    //       {video.views}
+                    //     </span>
+                    //     <span className="flex items-center gap-1">
+                    //       <Calendar className="h-3 w-3" />
+                    //       {video.date}
+                    //     </span>
+                    //   </div>
+                    //   <Button
+                    //     variant="outline"
+                    //     size="sm"
+                    //     className="border-primary/40 text-primary hover:bg-primary/10"
+                    //     asChild
+                    //   >
+                    //     <a href={video.youtubeUrl} target="_blank" rel="noopener noreferrer">
+                    //       <ExternalLink className="mr-1 h-3 w-3" />
+                    //       {language === "hi" ? "देखें" : "Watch"}
+                    //     </a>
+                    //   </Button>
+                    // </div>
+                    //   </div>
+                    // </GlassCard>
                   ))}
                 </div>
 

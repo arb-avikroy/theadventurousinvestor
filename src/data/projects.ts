@@ -88,9 +88,10 @@ export const aiProjects = {
 };
 
 export const contentData = {
+  
   videos: [
-    { id: "vid-1", title: { en: "Getting Started with SAP ABAP", hi: "SAP ABAP के साथ शुरुआत" }, description: { en: "Beginner's guide to ABAP.", hi: "ABAP की शुरुआती गाइड।" }, thumbnail: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400", youtubeUrl: "https://youtube.com", duration: "15:30", views: "12K", date: "2024-01-10" },
-    { id: "vid-2", title: { en: "AI Tools for Developers", hi: "डेवलपर्स के लिए AI टूल्स" }, description: { en: "Best AI tools for productivity.", hi: "उत्पादकता के लिए AI टूल्स।" }, thumbnail: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400", youtubeUrl: "https://youtube.com", duration: "20:45", views: "8.5K", date: "2024-02-15" },
+    { id: "LcDAAnOCDfc", title: { en: "Fiori Developer vs ABAP vs SAP AI: Which Role Pays ", hi: "Fiori डेवलपर बनाम ABAP बनाम SAP AI: अगले 3 वर्षों में कौन सी भूमिका अधिक वेतन देगी?" }, description: { en: "Beginner's guide to ABAP.", hi: "ABAP की शुरुआती गाइड।" }, thumbnail: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400", youtubeUrl: "https://youtube.com", duration: "15:30", views: "12K", date: "2025-12-23",  embedUrl: "https://www.youtube.com/embed/LcDAAnOCDfc?si=edsGz46JAfdGpfi3?autoplay=1&mute=1"},
+    { id: "N4T9FVcaHrk", title: { en: "Get Lovable.dev Pro for FREE (Limited-Time Trick)", hi: "Lovable.dev Pro को मुफ़्त में पाएं (सीमित समय के लिए ऑफर)" }, description: { en: "Best AI tools for productivity.", hi: "उत्पादकता के लिए AI टूल्स।" }, thumbnail: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400", youtubeUrl: "https://youtube.com", duration: "20:45", views: "8.5K", date: "2025-12-26" },
   ],
   blogs: [
     { id: "blog-1", title: { en: "The Future of Enterprise AI", hi: "एंटरप्राइज AI का भविष्य" }, excerpt: { en: "How AI is reshaping enterprise.", hi: "AI एंटरप्राइज को कैसे बदल रहा है।" }, readTime: "8 min", date: "2024-01-20", tags: ["AI", "Enterprise"] },
