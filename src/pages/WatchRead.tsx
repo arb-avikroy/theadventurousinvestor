@@ -4,18 +4,20 @@ import { Layout } from "@/components/layout/Layout";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Play, BookOpen, Clock, Calendar, Loader2 } from "lucide-react";
+import { ArrowLeft, Play, BookOpen, Clock, Calendar, Loader2, Bookmark, BookmarkX } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { contentData } from "@/data/projects";
 import { motion } from "framer-motion";
 import { useVideos } from "@/hooks/useVideos";
 import { useBlogs } from "@/hooks/useBlogs";
+import { useBookmarkedBlogs } from "@/hooks/useBookmarkedBlogs";
 
 const WatchRead = () => {
   const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState("blogs");
   const { data: dbVideos, isLoading: videosLoading } = useVideos();
   const { data: dbBlogs, isLoading: blogsLoading } = useBlogs();
+  const { data: bookmarkedBlogs, isLoading: savedLoading, removeBookmark } = useBookmarkedBlogs();
 
   // Use database data if available, otherwise use fallback
   const videos = dbVideos && dbVideos.length > 0 ? dbVideos : contentData.videos.map(v => ({
@@ -70,10 +72,14 @@ const WatchRead = () => {
             </div>
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
+              <TabsList className="grid w-full max-w-xl mx-auto grid-cols-3 mb-8">
                 <TabsTrigger value="blogs" className="flex items-center gap-2">
                   <BookOpen className="h-4 w-4" />
                   {language === "hi" ? "ब्लॉग" : "Blogs"}
+                </TabsTrigger>
+                <TabsTrigger value="saved" className="flex items-center gap-2">
+                  <Bookmark className="h-4 w-4" />
+                  {language === "hi" ? "सेव किए गए" : "Saved Articles"}
                 </TabsTrigger>
                 <TabsTrigger value="videos" className="flex items-center gap-2">
                   <Play className="h-4 w-4" />
@@ -187,6 +193,95 @@ const WatchRead = () => {
                               {language === "hi" ? "पढ़ें" : "Read"}
                             </Link>
                           </Button>
+                        </div>
+                      </GlassCard>
+                    ))}
+                  </div>
+                )}
+              </TabsContent>
+
+              <TabsContent value="saved">
+                {savedLoading ? (
+                  <div className="flex justify-center py-12">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                  </div>
+                ) : bookmarkedBlogs.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center py-16 text-center">
+                    <Bookmark className="h-16 w-16 text-muted-foreground/40 mb-4" />
+                    <h3 className="text-xl font-semibold text-foreground mb-2">
+                      {language === "hi" ? "अभी तक कोई सेव किए गए लेख नहीं" : "No saved articles yet"}
+                    </h3>
+                    <p className="text-muted-foreground max-w-md mb-6">
+                      {language === "hi"
+                        ? "ब्लॉग टैब से लेखों को बुकमार्क करें ताकि उन्हें यहां देख सकें।"
+                        : "Bookmark articles from the Blogs tab to see them here."}
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="border-primary/40 text-primary hover:bg-primary/10"
+                      onClick={() => setActiveTab("blogs")}
+                    >
+                      <BookOpen className="mr-2 h-4 w-4" />
+                      {language === "hi" ? "ब्लॉग ब्राउज़ करें" : "Browse Blogs"}
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {bookmarkedBlogs.map((blog, index) => (
+                      <GlassCard key={blog.id} hoverable delay={index * 0.1} className="p-6">
+                        <h3 className="text-primary font-semibold text-lg mb-2">
+                          {language === "hi" ? blog.title_hi : blog.title_en}
+                        </h3>
+                        <p className="text-muted-foreground text-sm mb-4">
+                          {language === "hi" ? blog.excerpt_hi : blog.excerpt_en}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {blog.tags?.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2 py-0.5 bg-secondary text-xs text-foreground rounded"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
+                          <Bookmark className="h-3 w-3 text-primary" />
+                          <span>
+                            {language === "hi" ? "सेव किया गया:" : "Saved:"}{" "}
+                            {new Date(blog.bookmarked_at).toLocaleDateString()}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                            <span className="flex items-center gap-1">
+                              <Clock className="h-3 w-3" />
+                              {blog.read_time}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <Calendar className="h-3 w-3" />
+                              {blog.publish_date}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-destructive hover:bg-destructive/10"
+                              onClick={() => removeBookmark(blog.id)}
+                            >
+                              <BookmarkX className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-primary hover:bg-primary/10"
+                            >
+                              <Link to={`/blog/${blog.slug}`}>
+                                {language === "hi" ? "पढ़ें" : "Read"}
+                              </Link>
+                            </Button>
+                          </div>
                         </div>
                       </GlassCard>
                     ))}
