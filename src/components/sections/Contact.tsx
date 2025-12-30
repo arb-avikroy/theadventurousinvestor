@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Linkedin, Github, Youtube, Instagram, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useContactForm } from "@/hooks/useContactForm";
 
 const socialLinks = [
   { icon: Linkedin, href: "https://www.linkedin.com/in/avik-barman/", label: "LinkedIn" },
@@ -23,47 +24,42 @@ export const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const { t } = useLanguage();
+  const contactMutation = useContactForm();
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setIsSubmitting(true);
-    
-  //   // Simulate form submission
-  //   await new Promise(resolve => setTimeout(resolve, 1000));
-    
-  //   toast({
-  //     title: t("contact.successTitle"),
-  //     description: t("contact.successDescription"),
-  //   });
-    
-  //   setName("");
-  //   setEmail("");
-  //   setMessage("");
-  //   setIsSubmitting(false);
-  // };
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-   
-  try {
-    await fetch("https://telegram-contact-api.arb-avikroy.workers.dev/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        email,
-        message
-      })
-    });
-    setName("");
-    setEmail("");
-    setMessage("");
-  } catch (err) {
-    console.error(err);
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Submit to Supabase
+      await contactMutation.mutateAsync({ name, email, message });
+      
+      // Also send to Telegram
+      await fetch("https://telegram-contact-api.arb-avikroy.workers.dev/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      toast({
+        title: t("contact.successTitle"),
+        description: t("contact.successDescription"),
+      });
+
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section id="contact" className="py-20 px-4 bg-secondary/50">

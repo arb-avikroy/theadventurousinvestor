@@ -3,83 +3,61 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Tag } from "@/components/ui/Tag";
 import { Button } from "@/components/ui/button";
-import { Github, ExternalLink, FolderOpen } from "lucide-react";
+import { Github, ExternalLink, FolderOpen, Loader2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
+import { useProjects } from "@/hooks/useProjects";
 
-const projectsDataEn = [
+// Fallback data for when database is empty
+const fallbackProjectsEn = [
   {
-    id: 1,
-    title: "SAPUI5 Bulk Excel Upload (Soon will be uploaded)",
-    description:
-      "Enterprise application enabling bulk Excel uploads with real-time validation, OData integration, and smart error handling for large-scale data processing.",
+    id: "1",
+    slug: "sapui5-bulk-upload",
+    title_en: "SAPUI5 Bulk Excel Upload (Soon will be uploaded)",
+    title_hi: "SAPUI5 बल्क Excel अपलोड",
+    description_en: "Enterprise application enabling bulk Excel uploads with real-time validation, OData integration, and smart error handling for large-scale data processing.",
+    description_hi: "बड़े पैमाने पर डेटा प्रोसेसिंग के लिए रियल-टाइम वैलिडेशन, OData इंटीग्रेशन और स्मार्ट एरर हैंडलिंग के साथ एंटरप्राइज एप्लीकेशन।",
     tags: ["SAPUI5", "OData", "Excel", "Enterprise"],
-    link: "#",
+    is_featured: true,
   },
   {
-    id: 2,
-    title: "AI Video Generation Pipeline (Soon will be uploaded)",
-    description:
-      "Automated content pipeline using multiple LLMs for script generation, voice synthesis, and video assembly—from idea to published video.",
+    id: "2",
+    slug: "ai-video-pipeline",
+    title_en: "AI Video Generation Pipeline (Soon will be uploaded)",
+    title_hi: "AI वीडियो जेनरेशन पाइपलाइन",
+    description_en: "Automated content pipeline using multiple LLMs for script generation, voice synthesis, and video assembly—from idea to published video.",
+    description_hi: "स्क्रिप्ट जेनरेशन, वॉइस सिंथेसिस और वीडियो असेंबली के लिए मल्टीपल LLMs का उपयोग करने वाली ऑटोमेटेड कंटेंट पाइपलाइन।",
     tags: ["AI", "Automation", "Video", "LLM"],
-    link: "#",
+    is_featured: true,
   },
   {
-    id: 3,
-    title: "n8n Content Automation (Soon will be uploaded)",
-    description:
-      "Workflow automation system that orchestrates content creation, scheduling, and distribution across multiple platforms with AI-powered enhancements.",
+    id: "3",
+    slug: "n8n-content-automation",
+    title_en: "n8n Content Automation (Soon will be uploaded)",
+    title_hi: "n8n कंटेंट ऑटोमेशन",
+    description_en: "Workflow automation system that orchestrates content creation, scheduling, and distribution across multiple platforms with AI-powered enhancements.",
+    description_hi: "AI-पावर्ड एन्हांसमेंट के साथ मल्टीपल प्लेटफॉर्म्स पर कंटेंट क्रिएशन, शेड्यूलिंग और डिस्ट्रीब्यूशन को ऑर्केस्ट्रेट करने वाला वर्कफ़्लो ऑटोमेशन सिस्टम।",
     tags: ["n8n", "Workflow", "LLM", "Automation"],
-    link: "#",
+    is_featured: true,
   },
   {
-    id: 4,
-    title: "Fiori + Node.js Full-Stack (Soon will be uploaded)",
-    description:
-      "Modern full-stack application combining SAP Fiori frontend with Node.js backend, MongoDB database, and RESTful API architecture.",
+    id: "4",
+    slug: "fiori-nodejs-fullstack",
+    title_en: "Fiori + Node.js Full-Stack (Soon will be uploaded)",
+    title_hi: "Fiori + Node.js फुल-स्टैक",
+    description_en: "Modern full-stack application combining SAP Fiori frontend with Node.js backend, MongoDB database, and RESTful API architecture.",
+    description_hi: "SAP Fiori फ्रंटएंड को Node.js बैकएंड, MongoDB डेटाबेस और RESTful API आर्किटेक्चर के साथ जोड़ने वाला मॉडर्न फुल-स्टैक एप्लीकेशन।",
     tags: ["SAP Fiori", "Node.js", "REST API", "MongoDB"],
-    link: "#",
-  },
-];
-
-const projectsDataHi = [
-  {
-    id: 1,
-    title: "SAPUI5 बल्क Excel अपलोड",
-    description:
-      "बड़े पैमाने पर डेटा प्रोसेसिंग के लिए रियल-टाइम वैलिडेशन, OData इंटीग्रेशन और स्मार्ट एरर हैंडलिंग के साथ एंटरप्राइज एप्लीकेशन।",
-    tags: ["SAPUI5", "OData", "Excel", "Enterprise"],
-    link: "#",
-  },
-  {
-    id: 2,
-    title: "AI वीडियो जेनरेशन पाइपलाइन",
-    description:
-      "स्क्रिप्ट जेनरेशन, वॉइस सिंथेसिस और वीडियो असेंबली के लिए मल्टीपल LLMs का उपयोग करने वाली ऑटोमेटेड कंटेंट पाइपलाइन।",
-    tags: ["AI", "Automation", "Video", "LLM"],
-    link: "#",
-  },
-  {
-    id: 3,
-    title: "n8n कंटेंट ऑटोमेशन",
-    description:
-      "AI-पावर्ड एन्हांसमेंट के साथ मल्टीपल प्लेटफॉर्म्स पर कंटेंट क्रिएशन, शेड्यूलिंग और डिस्ट्रीब्यूशन को ऑर्केस्ट्रेट करने वाला वर्कफ़्लो ऑटोमेशन सिस्टम।",
-    tags: ["n8n", "Workflow", "LLM", "Automation"],
-    link: "#",
-  },
-  {
-    id: 4,
-    title: "Fiori + Node.js फुल-स्टैक",
-    description:
-      "SAP Fiori फ्रंटएंड को Node.js बैकएंड, MongoDB डेटाबेस और RESTful API आर्किटेक्चर के साथ जोड़ने वाला मॉडर्न फुल-स्टैक एप्लीकेशन।",
-    tags: ["SAP Fiori", "Node.js", "REST API", "MongoDB"],
-    link: "#",
+    is_featured: true,
   },
 ];
 
 export const FeaturedProjects = () => {
   const { t, language } = useLanguage();
-  const projectsData = language === "hi" ? projectsDataHi : projectsDataEn;
+  const { data: dbProjects, isLoading } = useProjects(true);
+  
+  // Use database projects if available, otherwise use fallback
+  const projects = dbProjects && dbProjects.length > 0 ? dbProjects : fallbackProjectsEn;
 
   return (
     <section id="projects" className="py-20 px-4">
@@ -89,31 +67,37 @@ export const FeaturedProjects = () => {
           title={t("projects.title")}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {projectsData.map((project, index) => (
-            <GlassCard
-              key={project.id}
-              hoverable
-              delay={index * 0.1}
-              className="p-6 group"
-            >
-              <div className="flex items-start justify-between">
-                <h3 className="text-primary font-semibold text-xl mb-3">
-                  {project.title}
-                </h3>
-                <ExternalLink className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                {project.description}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <Tag key={tag}>{tag}</Tag>
-                ))}
-              </div>
-            </GlassCard>
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="flex justify-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {projects.map((project, index) => (
+              <GlassCard
+                key={project.id}
+                hoverable
+                delay={index * 0.1}
+                className="p-6 group"
+              >
+                <div className="flex items-start justify-between">
+                  <h3 className="text-primary font-semibold text-xl mb-3">
+                    {language === "hi" ? project.title_hi : project.title_en}
+                  </h3>
+                  <ExternalLink className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                  {language === "hi" ? project.description_hi : project.description_en}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <Tag key={tag}>{tag}</Tag>
+                  ))}
+                </div>
+              </GlassCard>
+            ))}
+          </div>
+        )}
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -123,14 +107,13 @@ export const FeaturedProjects = () => {
           className="flex flex-wrap justify-center gap-4 mt-10"
         >
           <Link to="/other-projects">
-          <Button
-            variant="outline"
-            className="border-primary/40 text-primary hover:bg-primary/10"  
-          >     
+            <Button
+              variant="outline"
+              className="border-primary/40 text-primary hover:bg-primary/10"
+            >
               <FolderOpen className="mr-2 h-4 w-4" />
               {t("projects.otherProjects")}
-            
-          </Button>
+            </Button>
           </Link>
           <Button
             variant="outline"
