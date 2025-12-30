@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Play, BookOpen, Clock, Calendar, Loader2, Bookmark, BookmarkX } from "lucide-react";
+import { ArrowLeft, Play, BookOpen, Clock, Calendar, Loader2, Bookmark, BookmarkX, X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { contentData } from "@/data/projects";
 import { motion } from "framer-motion";
@@ -15,6 +15,12 @@ import { useBookmarkedBlogs } from "@/hooks/useBookmarkedBlogs";
 const WatchRead = () => {
   const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState("blogs");
+  
+  // ===== ADD THESE TWO NEW STATE VARIABLES =====
+  const [selectedBlogTags, setSelectedBlogTags] = useState([]);
+  const [selectedSavedTags, setSelectedSavedTags] = useState([]);
+  // =============================================
+  
   const { data: dbVideos, isLoading: videosLoading } = useVideos();
   const { data: dbBlogs, isLoading: blogsLoading } = useBlogs();
   const { data: bookmarkedBlogs, isLoading: savedLoading, removeBookmark } = useBookmarkedBlogs();
@@ -43,6 +49,54 @@ const WatchRead = () => {
     publish_date: b.date,
     tags: b.tags,
   }));
+
+  // ===== ADD THESE HELPER FUNCTIONS =====
+  // Extract unique tags from blogs
+  const allBlogTags = useMemo(() => {
+    const tags = blogs.flatMap(blog => blog.tags || []);
+    return [...new Set(tags)].sort();
+  }, [blogs]);
+
+  // Extract unique tags from saved articles
+  const allSavedTags = useMemo(() => {
+    const tags = bookmarkedBlogs.flatMap(blog => blog.tags || []);
+    return [...new Set(tags)].sort();
+  }, [bookmarkedBlogs]);
+
+  // Toggle tag for blogs
+  const toggleBlogTag = (tag) => {
+    setSelectedBlogTags(prev => 
+      prev.includes(tag) 
+        ? prev.filter(t => t !== tag)
+        : [...prev, tag]
+    );
+  };
+
+  // Toggle tag for saved articles
+  const toggleSavedTag = (tag) => {
+    setSelectedSavedTags(prev => 
+      prev.includes(tag) 
+        ? prev.filter(t => t !== tag)
+        : [...prev, tag]
+    );
+  };
+
+  // Filter blogs based on selected tags
+  const filteredBlogs = useMemo(() => {
+    if (selectedBlogTags.length === 0) return blogs;
+    return blogs.filter(blog => 
+      selectedBlogTags.every(tag => blog.tags?.includes(tag))
+    );
+  }, [blogs, selectedBlogTags]);
+
+  // Filter saved articles based on selected tags
+  const filteredSavedBlogs = useMemo(() => {
+    if (selectedSavedTags.length === 0) return bookmarkedBlogs;
+    return bookmarkedBlogs.filter(blog => 
+      selectedSavedTags.every(tag => blog.tags?.includes(tag))
+    );
+  }, [bookmarkedBlogs, selectedSavedTags]);
+  // ======================================
 
   return (
     <Layout>
@@ -149,13 +203,82 @@ const WatchRead = () => {
               </TabsContent>
 
               <TabsContent value="blogs">
+                {/* ===== ADD THIS TAG FILTER SECTION ===== */}
+                {allBlogTags.length > 0 && (
+                  <GlassCard className="p-4 mb-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-sm font-semibold text-foreground">
+                        {language === "hi" ? "टैग के आधार पर फ़िल्टर करें" : "Filter by Tags"}
+                      </h3>
+                      {selectedBlogTags.length > 0 && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setSelectedBlogTags([])}
+                          className="text-xs text-primary hover:text-primary/80 h-auto p-1"
+                        >
+                          <X className="h-3 w-3 mr-1" />
+                          {language === "hi" ? "सभी साफ़ करें" : "Clear All"}
+                        </Button>
+                      )}
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-2">
+                      {allBlogTags.map(tag => (
+                        <button
+                          key={tag}
+                          onClick={() => toggleBlogTag(tag)}
+                          className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+                            selectedBlogTags.includes(tag)
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-secondary text-foreground hover:bg-secondary/80'
+                          }`}
+                        >
+                          {tag}
+                        </button>
+                      ))}
+                    </div>
+
+                    {selectedBlogTags.length > 0 && (
+                      <div className="mt-3 pt-3 border-t border-border">
+                        <p className="text-xs text-muted-foreground">
+                          {language === "hi" 
+                            ? `${filteredBlogs.length} लेख मिले` 
+                            : `Showing ${filteredBlogs.length} ${filteredBlogs.length === 1 ? 'article' : 'articles'}`}
+                        </p>
+                      </div>
+                    )}
+                  </GlassCard>
+                )}
+                {/* ======================================= */}
+
                 {blogsLoading ? (
                   <div className="flex justify-center py-12">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
                   </div>
+                ) : filteredBlogs.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center py-16 text-center">
+                    <BookOpen className="h-16 w-16 text-muted-foreground/40 mb-4" />
+                    <h3 className="text-xl font-semibold text-foreground mb-2">
+                      {language === "hi" ? "कोई लेख नहीं मिला" : "No articles found"}
+                    </h3>
+                    <p className="text-muted-foreground max-w-md mb-6">
+                      {language === "hi"
+                        ? "चयनित फ़िल्टर से मेल खाने वाला कोई लेख नहीं है।"
+                        : "No articles match the selected filters."}
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="border-primary/40 text-primary hover:bg-primary/10"
+                      onClick={() => setSelectedBlogTags([])}
+                    >
+                      {language === "hi" ? "फ़िल्टर साफ़ करें" : "Clear Filters"}
+                    </Button>
+                  </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {blogs.map((blog, index) => (
+                    {/* ===== CHANGE blogs.map TO filteredBlogs.map ===== */}
+                    {filteredBlogs.map((blog, index) => (
                       <GlassCard key={blog.id} hoverable delay={index * 0.1} className="p-6">
                         <h3 className="text-primary font-semibold text-lg mb-2">
                           {language === "hi" ? blog.title_hi : blog.title_en}
@@ -201,6 +324,58 @@ const WatchRead = () => {
               </TabsContent>
 
               <TabsContent value="saved">
+                <p><center>{language === "hi" ? "ध्यान दें: इस साइट पर लॉगिन की आवश्यकता नहीं है, इसलिए बुकमार्क आपके आईपी पते के आधार पर सहेजे जाते हैं। यदि आप यात्रा के दौरान लेख पढ़ने की योजना बना रहे हैं, तो बुकमार्क को सहेजने और लगातार एक्सेस करने के लिए मोबाइल नेटवर्क का उपयोग करें।" : "Note: This site does not require login, so bookmarks are saved based on your IP address. If you plan to read articles while travelling, use a mobile network to save and access your bookmarks consistently."}
+                </center></p>
+                
+                {/* ===== ADD THIS TAG FILTER SECTION FOR SAVED ARTICLES ===== */}
+                {!savedLoading && bookmarkedBlogs.length > 0 && allSavedTags.length > 0 && (
+                  <GlassCard className="p-4 mb-6 mt-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-sm font-semibold text-foreground">
+                        {language === "hi" ? "टैग के आधार पर फ़िल्टर करें" : "Filter by Tags"}
+                      </h3>
+                      {selectedSavedTags.length > 0 && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setSelectedSavedTags([])}
+                          className="text-xs text-primary hover:text-primary/80 h-auto p-1"
+                        >
+                          <X className="h-3 w-3 mr-1" />
+                          {language === "hi" ? "सभी साफ़ करें" : "Clear All"}
+                        </Button>
+                      )}
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-2">
+                      {allSavedTags.map(tag => (
+                        <button
+                          key={tag}
+                          onClick={() => toggleSavedTag(tag)}
+                          className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+                            selectedSavedTags.includes(tag)
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-secondary text-foreground hover:bg-secondary/80'
+                          }`}
+                        >
+                          {tag}
+                        </button>
+                      ))}
+                    </div>
+
+                    {selectedSavedTags.length > 0 && (
+                      <div className="mt-3 pt-3 border-t border-border">
+                        <p className="text-xs text-muted-foreground">
+                          {language === "hi" 
+                            ? `${filteredSavedBlogs.length} लेख मिले` 
+                            : `Showing ${filteredSavedBlogs.length} ${filteredSavedBlogs.length === 1 ? 'article' : 'articles'}`}
+                        </p>
+                      </div>
+                    )}
+                  </GlassCard>
+                )}
+                {/* ========================================================= */}
+
                 {savedLoading ? (
                   <div className="flex justify-center py-12">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -225,9 +400,29 @@ const WatchRead = () => {
                       {language === "hi" ? "ब्लॉग ब्राउज़ करें" : "Browse Blogs"}
                     </Button>
                   </div>
+                ) : filteredSavedBlogs.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center py-16 text-center">
+                    <Bookmark className="h-16 w-16 text-muted-foreground/40 mb-4" />
+                    <h3 className="text-xl font-semibold text-foreground mb-2">
+                      {language === "hi" ? "कोई लेख नहीं मिला" : "No articles found"}
+                    </h3>
+                    <p className="text-muted-foreground max-w-md mb-6">
+                      {language === "hi"
+                        ? "चयनित फ़िल्टर से मेल खाने वाला कोई सहेजा गया लेख नहीं है।"
+                        : "No saved articles match the selected filters."}
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="border-primary/40 text-primary hover:bg-primary/10"
+                      onClick={() => setSelectedSavedTags([])}
+                    >
+                      {language === "hi" ? "फ़िल्टर साफ़ करें" : "Clear Filters"}
+                    </Button>
+                  </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {bookmarkedBlogs.map((blog, index) => (
+                    {/* ===== CHANGE bookmarkedBlogs.map TO filteredSavedBlogs.map ===== */}
+                    {filteredSavedBlogs.map((blog, index) => (
                       <GlassCard key={blog.id} hoverable delay={index * 0.1} className="p-6">
                         <h3 className="text-primary font-semibold text-lg mb-2">
                           {language === "hi" ? blog.title_hi : blog.title_en}
