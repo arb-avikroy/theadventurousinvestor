@@ -1,15 +1,53 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ExternalLink, Users, Folder, FileText, Bot, Sparkles } from "lucide-react";
+import { ArrowLeft, ExternalLink, Users, Folder, FileText, Bot, Sparkles, Loader2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { aiProjects } from "@/data/projects";
 import { motion } from "framer-motion";
+import { useAIProjectsByCategories } from "@/hooks/useAIProjects";
 
 const ExploreAI = () => {
   const { language } = useLanguage();
+  const { data: dbData, isLoading } = useAIProjectsByCategories();
+
+  // Use database data if available, otherwise use fallback
+  const community = dbData?.community && dbData.community.length > 0 
+    ? dbData.community 
+    : aiProjects.community.map(item => ({
+        id: item.id,
+        name_en: item.name.en,
+        name_hi: item.name.hi,
+        description_en: item.description.en,
+        description_hi: item.description.hi,
+        link: item.link,
+        type: item.type,
+      }));
+
+  const projects = dbData?.projects && dbData.projects.length > 0 
+    ? dbData.projects 
+    : aiProjects.projects.map(item => ({
+        id: item.id,
+        name_en: item.name.en,
+        name_hi: item.name.hi,
+        description_en: item.description.en,
+        description_hi: item.description.hi,
+        status: item.status,
+        tech: item.tech,
+      }));
+
+  const articles = dbData?.articles && dbData.articles.length > 0 
+    ? dbData.articles 
+    : aiProjects.articles.map(item => ({
+        id: item.id,
+        name_en: item.title.en,
+        name_hi: item.title.hi,
+        description_en: item.excerpt.en,
+        description_hi: item.excerpt.hi,
+        read_time: item.readTime,
+        publish_date: item.date,
+      }));
 
   return (
     <Layout>
@@ -42,112 +80,128 @@ const ExploreAI = () => {
               </p>
             </div>
 
-            {/* Community Section - Custom GPTs */}
-            <div className="mb-16">
-              <div className="flex items-center gap-3 mb-6">
-                <Users className="h-6 w-6 text-primary" />
-                <h2 className="text-2xl font-bold text-foreground">
-                  {language === "hi" ? "कम्युनिटी - कस्टम GPTs" : "Community - Custom GPTs"}
-                </h2>
+            {isLoading ? (
+              <div className="flex justify-center py-12">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {aiProjects.community.map((item, index) => (
-                  <GlassCard key={item.id} hoverable delay={index * 0.1} className="p-6">
-                    <div className="flex items-start justify-between mb-3">
-                      <h3 className="text-primary font-semibold text-lg">
-                        {item.name[language]}
-                      </h3>
-                      <span className="px-2 py-1 bg-primary/20 text-primary text-xs rounded-full">
-                        {item.type}
-                      </span>
-                    </div>
-                    <p className="text-muted-foreground text-sm mb-4">
-                      {item.description[language]}
-                    </p>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="border-primary/40 text-primary hover:bg-primary/10"
-                      asChild
-                    >
-                      <a href={item.link} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="mr-2 h-4 w-4" />
-                        {language === "hi" ? "आज़माएं" : "Try It"}
-                      </a>
-                    </Button>
-                  </GlassCard>
-                ))}
-              </div>
-            </div>
+            ) : (
+              <>
+                {/* Community Section - Custom GPTs */}
+                <div className="mb-16">
+                  <div className="flex items-center gap-3 mb-6">
+                    <Users className="h-6 w-6 text-primary" />
+                    <h2 className="text-2xl font-bold text-foreground">
+                      {language === "hi" ? "कम्युनिटी - कस्टम GPTs" : "Community - Custom GPTs"}
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {community.map((item, index) => (
+                      <GlassCard key={item.id} hoverable delay={index * 0.1} className="p-6">
+                        <div className="flex items-start justify-between mb-3">
+                          <h3 className="text-primary font-semibold text-lg">
+                            {language === "hi" ? item.name_hi : item.name_en}
+                          </h3>
+                          {item.type && (
+                            <span className="px-2 py-1 bg-primary/20 text-primary text-xs rounded-full">
+                              {item.type}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-muted-foreground text-sm mb-4">
+                          {language === "hi" ? item.description_hi : item.description_en}
+                        </p>
+                        {item.link && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="border-primary/40 text-primary hover:bg-primary/10"
+                            asChild
+                          >
+                            <a href={item.link} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="mr-2 h-4 w-4" />
+                              {language === "hi" ? "आज़माएं" : "Try It"}
+                            </a>
+                          </Button>
+                        )}
+                      </GlassCard>
+                    ))}
+                  </div>
+                </div>
 
-            {/* Projects Section */}
-            <div className="mb-16">
-              <div className="flex items-center gap-3 mb-6">
-                <Folder className="h-6 w-6 text-primary" />
-                <h2 className="text-2xl font-bold text-foreground">
-                  {language === "hi" ? "प्रोजेक्ट्स" : "Projects"}
-                </h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {aiProjects.projects.map((project, index) => (
-                  <GlassCard key={project.id} hoverable delay={index * 0.1} className="p-6">
-                    <div className="flex items-start justify-between mb-3">
-                      <h3 className="text-primary font-semibold text-lg">
-                        {project.name[language]}
-                      </h3>
-                      <span
-                        className={`px-2 py-1 text-xs rounded-full ${
-                          project.status === "Active"
-                            ? "bg-green-500/20 text-green-400"
-                            : "bg-yellow-500/20 text-yellow-400"
-                        }`}
-                      >
-                        {project.status}
-                      </span>
-                    </div>
-                    <p className="text-muted-foreground text-sm mb-4">
-                      {project.description[language]}
-                    </p>
-                    <div className="flex flex-wrap gap-1">
-                      {project.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2 py-0.5 bg-secondary text-xs text-foreground rounded"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </GlassCard>
-                ))}
-              </div>
-            </div>
+                {/* Projects Section */}
+                <div className="mb-16">
+                  <div className="flex items-center gap-3 mb-6">
+                    <Folder className="h-6 w-6 text-primary" />
+                    <h2 className="text-2xl font-bold text-foreground">
+                      {language === "hi" ? "प्रोजेक्ट्स" : "Projects"}
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {projects.map((project, index) => (
+                      <GlassCard key={project.id} hoverable delay={index * 0.1} className="p-6">
+                        <div className="flex items-start justify-between mb-3">
+                          <h3 className="text-primary font-semibold text-lg">
+                            {language === "hi" ? project.name_hi : project.name_en}
+                          </h3>
+                          {project.status && (
+                            <span
+                              className={`px-2 py-1 text-xs rounded-full ${
+                                project.status === "Active"
+                                  ? "bg-green-500/20 text-green-400"
+                                  : "bg-yellow-500/20 text-yellow-400"
+                              }`}
+                            >
+                              {project.status}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-muted-foreground text-sm mb-4">
+                          {language === "hi" ? project.description_hi : project.description_en}
+                        </p>
+                        {project.tech && (
+                          <div className="flex flex-wrap gap-1">
+                            {project.tech.map((tech) => (
+                              <span
+                                key={tech}
+                                className="px-2 py-0.5 bg-secondary text-xs text-foreground rounded"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </GlassCard>
+                    ))}
+                  </div>
+                </div>
 
-            {/* Articles Section */}
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <FileText className="h-6 w-6 text-primary" />
-                <h2 className="text-2xl font-bold text-foreground">
-                  {language === "hi" ? "लेख" : "Articles"}
-                </h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {aiProjects.articles.map((article, index) => (
-                  <GlassCard key={article.id} hoverable delay={index * 0.1} className="p-6">
-                    <h3 className="text-primary font-semibold text-lg mb-2">
-                      {article.title[language]}
-                    </h3>
-                    <p className="text-muted-foreground text-sm mb-4">
-                      {article.excerpt[language]}
-                    </p>
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                      <span>📖 {article.readTime}</span>
-                      <span>📅 {article.date}</span>
-                    </div>
-                  </GlassCard>
-                ))}
-              </div>
-            </div>
+                {/* Articles Section */}
+                <div>
+                  <div className="flex items-center gap-3 mb-6">
+                    <FileText className="h-6 w-6 text-primary" />
+                    <h2 className="text-2xl font-bold text-foreground">
+                      {language === "hi" ? "लेख" : "Articles"}
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {articles.map((article, index) => (
+                      <GlassCard key={article.id} hoverable delay={index * 0.1} className="p-6">
+                        <h3 className="text-primary font-semibold text-lg mb-2">
+                          {language === "hi" ? article.name_hi : article.name_en}
+                        </h3>
+                        <p className="text-muted-foreground text-sm mb-4">
+                          {language === "hi" ? article.description_hi : article.description_en}
+                        </p>
+                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                          {article.read_time && <span>📖 {article.read_time}</span>}
+                          {article.publish_date && <span>📅 {article.publish_date}</span>}
+                        </div>
+                      </GlassCard>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
           </motion.div>
         </div>
       </section>
