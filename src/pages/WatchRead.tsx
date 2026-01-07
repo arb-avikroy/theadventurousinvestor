@@ -4,7 +4,7 @@ import { Layout } from "@/components/layout/Layout";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Play, BookOpen, Clock, Calendar, Loader2, Bookmark, BookmarkX, X } from "lucide-react";
+import { ArrowLeft, Play, BookOpen, Clock, Calendar, Loader2, Bookmark, BookmarkX, X, FileText, Download } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { contentData } from "@/data/projects";
 import { motion } from "framer-motion";
@@ -15,15 +15,40 @@ import { useBookmarkedBlogs } from "@/hooks/useBookmarkedBlogs";
 const WatchRead = () => {
   const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState("blogs");
-  
-  // ===== ADD THESE TWO NEW STATE VARIABLES =====
   const [selectedBlogTags, setSelectedBlogTags] = useState([]);
   const [selectedSavedTags, setSelectedSavedTags] = useState([]);
-  // =============================================
+  const [selectedCheatsheetTags, setSelectedCheatsheetTags] = useState([]);
   
   const { data: dbVideos, isLoading: videosLoading } = useVideos();
   const { data: dbBlogs, isLoading: blogsLoading } = useBlogs();
   const { data: bookmarkedBlogs, isLoading: savedLoading, removeBookmark } = useBookmarkedBlogs();
+
+  // Cheatsheets data (add this to your contentData or create a separate hook)
+  const cheatsheets = [
+    {
+      id: 1,
+      title_en: "Useful SAP Tables",
+      title_hi: "उपयोगी SAP तालिकाएँ",
+      description_en: "Essential SAP Tables used everyday",
+      description_hi: "रोजमर्रा में उपयोग होने वाली आवश्यक SAP तालिकाएँ",
+      tags: ["SAP Tables", "Functional", "Database"],
+      pages: 2,
+      download_url: "src/assets/SAPTableCheatsheet08_01_2025.png",
+      publish_date: "2026-08-01"
+    },
+    
+    {
+      id: 2,
+      title_en: "SQL Commands Quick Reference",
+      title_hi: "SQL कमांड्स क्विक रेफरेंस",
+      description_en: "Most commonly used SQL queries",
+      description_hi: "सबसे अधिक उपयोग किए जाने वाले SQL क्वेरी",
+      tags: ["SQL", "Database", "Backend"],
+      pages: 1,
+      download_url: "src/assets/SQLCheatsheet08_01_2025.png",
+      publish_date: "2026-08-01"
+    }
+  ];
 
   // Use database data if available, otherwise use fallback
   const videos = dbVideos && dbVideos.length > 0 ? dbVideos : contentData.videos.map(v => ({
@@ -50,20 +75,23 @@ const WatchRead = () => {
     tags: b.tags,
   }));
 
-  // ===== ADD THESE HELPER FUNCTIONS =====
-  // Extract unique tags from blogs
+  // Extract unique tags
   const allBlogTags = useMemo(() => {
     const tags = blogs.flatMap(blog => blog.tags || []);
     return [...new Set(tags)].sort();
   }, [blogs]);
 
-  // Extract unique tags from saved articles
   const allSavedTags = useMemo(() => {
     const tags = bookmarkedBlogs.flatMap(blog => blog.tags || []);
     return [...new Set(tags)].sort();
   }, [bookmarkedBlogs]);
 
-  // Toggle tag for blogs
+  const allCheatsheetTags = useMemo(() => {
+    const tags = cheatsheets.flatMap(sheet => sheet.tags || []);
+    return [...new Set(tags)].sort();
+  }, [cheatsheets]);
+
+  // Toggle tag functions
   const toggleBlogTag = (tag) => {
     setSelectedBlogTags(prev => 
       prev.includes(tag) 
@@ -72,7 +100,6 @@ const WatchRead = () => {
     );
   };
 
-  // Toggle tag for saved articles
   const toggleSavedTag = (tag) => {
     setSelectedSavedTags(prev => 
       prev.includes(tag) 
@@ -81,7 +108,15 @@ const WatchRead = () => {
     );
   };
 
-  // Filter blogs based on selected tags
+  const toggleCheatsheetTag = (tag) => {
+    setSelectedCheatsheetTags(prev => 
+      prev.includes(tag) 
+        ? prev.filter(t => t !== tag)
+        : [...prev, tag]
+    );
+  };
+
+  // Filter content
   const filteredBlogs = useMemo(() => {
     if (selectedBlogTags.length === 0) return blogs;
     return blogs.filter(blog => 
@@ -89,14 +124,19 @@ const WatchRead = () => {
     );
   }, [blogs, selectedBlogTags]);
 
-  // Filter saved articles based on selected tags
   const filteredSavedBlogs = useMemo(() => {
     if (selectedSavedTags.length === 0) return bookmarkedBlogs;
     return bookmarkedBlogs.filter(blog => 
       selectedSavedTags.every(tag => blog.tags?.includes(tag))
     );
   }, [bookmarkedBlogs, selectedSavedTags]);
-  // ======================================
+
+  const filteredCheatsheets = useMemo(() => {
+    if (selectedCheatsheetTags.length === 0) return cheatsheets;
+    return cheatsheets.filter(sheet => 
+      selectedCheatsheetTags.every(tag => sheet.tags?.includes(tag))
+    );
+  }, [cheatsheets, selectedCheatsheetTags]);
 
   return (
     <Layout>
@@ -126,21 +166,148 @@ const WatchRead = () => {
             </div>
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full max-w-xl mx-auto grid-cols-3 mb-8">
+              <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4 mb-8">
                 <TabsTrigger value="blogs" className="flex items-center gap-2">
                   <BookOpen className="h-4 w-4" />
-                  {language === "hi" ? "ब्लॉग" : "Blogs"}
+                  <span className="hidden sm:inline">{language === "hi" ? "ब्लॉग" : "Blogs"}</span>
                 </TabsTrigger>
                 <TabsTrigger value="saved" className="flex items-center gap-2">
                   <Bookmark className="h-4 w-4" />
-                  {language === "hi" ? "सेव किए गए" : "Saved Articles"}
+                  <span className="hidden sm:inline">{language === "hi" ? "सेव किए गए" : "Saved"}</span>
+                </TabsTrigger>
+                <TabsTrigger value="cheatsheets" className="flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  <span className="hidden sm:inline">{language === "hi" ? "चीटशीट" : "Cheatsheets"}</span>
                 </TabsTrigger>
                 <TabsTrigger value="videos" className="flex items-center gap-2">
                   <Play className="h-4 w-4" />
-                  {language === "hi" ? "यूट्यूब वीडियो" : "YouTube Videos"}
+                  <span className="hidden sm:inline">{language === "hi" ? "वीडियो" : "Videos"}</span>
                 </TabsTrigger>
               </TabsList>
 
+              {/* CHEATSHEETS TAB */}
+              <TabsContent value="cheatsheets">
+                {allCheatsheetTags.length > 0 && (
+                  <GlassCard className="p-4 mb-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-sm font-semibold text-foreground">
+                        {language === "hi" ? "टैग के आधार पर फ़िल्टर करें" : "Filter by Tags"}
+                      </h3>
+                      {selectedCheatsheetTags.length > 0 && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setSelectedCheatsheetTags([])}
+                          className="text-xs text-primary hover:text-primary/80 h-auto p-1"
+                        >
+                          <X className="h-3 w-3 mr-1" />
+                          {language === "hi" ? "सभी साफ़ करें" : "Clear All"}
+                        </Button>
+                      )}
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-2">
+                      {allCheatsheetTags.map(tag => (
+                        <button
+                          key={tag}
+                          onClick={() => toggleCheatsheetTag(tag)}
+                          className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+                            selectedCheatsheetTags.includes(tag)
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-secondary text-foreground hover:bg-secondary/80'
+                          }`}
+                        >
+                          {tag}
+                        </button>
+                      ))}
+                    </div>
+
+                    {selectedCheatsheetTags.length > 0 && (
+                      <div className="mt-3 pt-3 border-t border-border">
+                        <p className="text-xs text-muted-foreground">
+                          {language === "hi" 
+                            ? `${filteredCheatsheets.length} चीटशीट मिले` 
+                            : `Showing ${filteredCheatsheets.length} ${filteredCheatsheets.length === 1 ? 'cheatsheet' : 'cheatsheets'}`}
+                        </p>
+                      </div>
+                    )}
+                  </GlassCard>
+                )}
+
+                {filteredCheatsheets.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center py-16 text-center">
+                    <FileText className="h-16 w-16 text-muted-foreground/40 mb-4" />
+                    <h3 className="text-xl font-semibold text-foreground mb-2">
+                      {language === "hi" ? "कोई चीटशीट नहीं मिली" : "No cheatsheets found"}
+                    </h3>
+                    <p className="text-muted-foreground max-w-md mb-6">
+                      {language === "hi"
+                        ? "चयनित फ़िल्टर से मेल खाने वाली कोई चीटशीट नहीं है।"
+                        : "No cheatsheets match the selected filters."}
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="border-primary/40 text-primary hover:bg-primary/10"
+                      onClick={() => setSelectedCheatsheetTags([])}
+                    >
+                      {language === "hi" ? "फ़िल्टर साफ़ करें" : "Clear Filters"}
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filteredCheatsheets.map((sheet, index) => (
+                      <GlassCard key={sheet.id} hoverable delay={index * 0.1} className="p-6">
+                        <div className="flex items-start justify-between mb-3">
+                          <FileText className="h-8 w-8 text-primary" />
+                          {/* <span className="text-xs text-muted-foreground">
+                            {sheet.pages} {language === "hi" ? "पेज" : "pages"}
+                          </span> */}
+                        </div>
+                        
+                        <h3 className="text-primary font-semibold text-lg mb-2">
+                          {language === "hi" ? sheet.title_hi : sheet.title_en}
+                        </h3>
+                        
+                        <p className="text-muted-foreground text-sm mb-4">
+                          {language === "hi" ? sheet.description_hi : sheet.description_en}
+                        </p>
+                        
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {sheet.tags?.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2 py-0.5 bg-secondary text-xs text-foreground rounded"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                            <Calendar className="h-3 w-3" />
+                            {sheet.publish_date}
+                          </span>
+                          
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-primary hover:bg-primary/10"
+                            asChild
+                          >
+                            <a href={sheet.download_url} download>
+                              <Download className="mr-2 h-4 w-4" />
+                              {language === "hi" ? "डाउनलोड" : "Download"}
+                            </a>
+                          </Button>
+                        </div>
+                      </GlassCard>
+                    ))}
+                  </div>
+                )}
+              </TabsContent>
+
+              {/* VIDEOS TAB */}
               <TabsContent value="videos">
                 {videosLoading ? (
                   <div className="flex justify-center py-12">
@@ -202,8 +369,8 @@ const WatchRead = () => {
                 </motion.div>
               </TabsContent>
 
+              {/* BLOGS TAB */}
               <TabsContent value="blogs">
-                {/* ===== ADD THIS TAG FILTER SECTION ===== */}
                 {allBlogTags.length > 0 && (
                   <GlassCard className="p-4 mb-6">
                     <div className="flex items-center justify-between mb-3">
@@ -250,7 +417,6 @@ const WatchRead = () => {
                     )}
                   </GlassCard>
                 )}
-                {/* ======================================= */}
 
                 {blogsLoading ? (
                   <div className="flex justify-center py-12">
@@ -277,7 +443,6 @@ const WatchRead = () => {
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {/* ===== CHANGE blogs.map TO filteredBlogs.map ===== */}
                     {filteredBlogs.map((blog, index) => (
                       <GlassCard key={blog.id} hoverable delay={index * 0.1} className="p-6">
                         <h3 className="text-primary font-semibold text-lg mb-2">
@@ -323,11 +488,11 @@ const WatchRead = () => {
                 )}
               </TabsContent>
 
+              {/* SAVED ARTICLES TAB */}
               <TabsContent value="saved">
                 <p><center>{language === "hi" ? "ध्यान दें: इस साइट पर लॉगिन की आवश्यकता नहीं है, इसलिए बुकमार्क आपके आईपी पते के आधार पर सहेजे जाते हैं। यदि आप यात्रा के दौरान लेख पढ़ने की योजना बना रहे हैं, तो बुकमार्क को सहेजने और लगातार एक्सेस करने के लिए मोबाइल नेटवर्क का उपयोग करें।" : "Note: This site does not require login, so bookmarks are saved based on your IP address. If you plan to read articles while travelling, use a mobile network to save and access your bookmarks consistently."}
                 </center></p>
                 
-                {/* ===== ADD THIS TAG FILTER SECTION FOR SAVED ARTICLES ===== */}
                 {!savedLoading && bookmarkedBlogs.length > 0 && allSavedTags.length > 0 && (
                   <GlassCard className="p-4 mb-6 mt-4">
                     <div className="flex items-center justify-between mb-3">
@@ -374,7 +539,6 @@ const WatchRead = () => {
                     )}
                   </GlassCard>
                 )}
-                {/* ========================================================= */}
 
                 {savedLoading ? (
                   <div className="flex justify-center py-12">
@@ -421,7 +585,6 @@ const WatchRead = () => {
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {/* ===== CHANGE bookmarkedBlogs.map TO filteredSavedBlogs.map ===== */}
                     {filteredSavedBlogs.map((blog, index) => (
                       <GlassCard key={blog.id} hoverable delay={index * 0.1} className="p-6">
                         <h3 className="text-primary font-semibold text-lg mb-2">
