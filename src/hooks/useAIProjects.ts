@@ -16,6 +16,8 @@ export interface AIProject {
   publish_date: string | null;
   display_order: number;
   created_at: string;
+  github_url: string;
+  live_url: string;
 }
 
 export const useAIProjects = (category?: string) => {

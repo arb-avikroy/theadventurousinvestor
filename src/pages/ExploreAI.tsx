@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ExternalLink, Users, Folder, FileText, Bot, Sparkles, Loader2 } from "lucide-react";
+import { ArrowLeft, ExternalLink, Users, Folder, FileText, Bot, Sparkles, Loader2, ExternalLinkIcon } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { aiProjects } from "@/data/projects";
 import { motion } from "framer-motion";
@@ -13,41 +13,43 @@ const ExploreAI = () => {
   const { data: dbData, isLoading } = useAIProjectsByCategories();
 
   // Use database data if available, otherwise use fallback
-  const community = dbData?.community && dbData.community.length > 0 
-    ? dbData.community 
+  const community = dbData?.community && dbData.community.length > 0
+    ? dbData.community
     : aiProjects.community.map(item => ({
-        id: item.id,
-        name_en: item.name.en,
-        name_hi: item.name.hi,
-        description_en: item.description.en,
-        description_hi: item.description.hi,
-        link: item.link,
-        type: item.type,
-      }));
+      id: item.id,
+      name_en: item.name.en,
+      name_hi: item.name.hi,
+      description_en: item.description.en,
+      description_hi: item.description.hi,
+      link: item.link,
+      type: item.type,
+    }));
 
-  const projects = dbData?.projects && dbData.projects.length > 0 
-    ? dbData.projects 
+  const projects = dbData?.projects && dbData.projects.length > 0
+    ? dbData.projects
     : aiProjects.projects.map(item => ({
-        id: item.id,
-        name_en: item.name.en,
-        name_hi: item.name.hi,
-        description_en: item.description.en,
-        description_hi: item.description.hi,
-        status: item.status,
-        tech: item.tech,
-      }));
+      id: item.id,
+      name_en: item.name.en,
+      name_hi: item.name.hi,
+      description_en: item.description.en,
+      description_hi: item.description.hi,
+      status: item.status,
+      tech: item.tech,
+      github_Url: item.github_Url,
+      live_Url: item.live_Url,
+    }));
 
-  const articles = dbData?.articles && dbData.articles.length > 0 
-    ? dbData.articles 
+  const articles = dbData?.articles && dbData.articles.length > 0
+    ? dbData.articles
     : aiProjects.articles.map(item => ({
-        id: item.id,
-        name_en: item.title.en,
-        name_hi: item.title.hi,
-        description_en: item.excerpt.en,
-        description_hi: item.excerpt.hi,
-        read_time: item.readTime,
-        publish_date: item.date,
-      }));
+      id: item.id,
+      name_en: item.title.en,
+      name_hi: item.title.hi,
+      description_en: item.excerpt.en,
+      description_hi: item.excerpt.hi,
+      read_time: item.readTime,
+      publish_date: item.date,
+    }));
 
   return (
     <Layout>
@@ -145,11 +147,10 @@ const ExploreAI = () => {
                           </h3>
                           {project.status && (
                             <span
-                              className={`px-2 py-1 text-xs rounded-full ${
-                                project.status === "Active"
-                                  ? "bg-green-500/20 text-green-400"
-                                  : "bg-yellow-500/20 text-yellow-400"
-                              }`}
+                              className={`px-2 py-1 text-xs rounded-full ${project.status === "Active"
+                                ? "bg-green-500/20 text-green-400"
+                                : "bg-yellow-500/20 text-yellow-400"
+                                }`}
                             >
                               {project.status}
                             </span>
@@ -170,6 +171,27 @@ const ExploreAI = () => {
                             ))}
                           </div>
                         )}
+                        <div className="mt-4 flex items-center gap-6">
+                          {project.live_url && (
+                            <Button asChild className="rounded-full bg-[#D1A67F] text-black hover:bg-[#c4956a] h-10">
+                              <a href={project.live_url} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                                <ExternalLinkIcon className="mr-2 h-4 w-4" />
+                                {language === "hi" ? "लाइव डेमो" : "Live Demo"}
+                              </a>
+                            </Button>
+                          )}
+
+                          {project.github_url && (
+                            <Button
+                              asChild
+                              className="rounded-none bg-slate-600 text-white hover:bg-slate-700 h-10 px-4"
+                            >
+                              <a href={project.github_url} target="_blank" rel="noopener noreferrer">
+                                {language === "hi" ? "गिट कोड" : "Git Code"}
+                              </a>
+                            </Button>
+                          )}
+                        </div>
                       </GlassCard>
                     ))}
                   </div>

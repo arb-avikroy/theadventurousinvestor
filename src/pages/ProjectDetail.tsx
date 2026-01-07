@@ -33,8 +33,8 @@ const ProjectDetail = () => {
     features_hi: localProject.features.hi,
     tech_stack: localProject.techStack,
     status: localProject.status,
-    github_url: localProject.githubUrl,
-    live_url: localProject.liveUrl,
+    github_url: localProject.github_Url,
+    live_url: localProject.live_Url,
   } : null);
 
   const statusColors: Record<string, string> = {
@@ -162,7 +162,7 @@ const ProjectDetail = () => {
                 )}
                 {project.live_url && (
                   <Button asChild>
-                    <a href={project.live_url} target="_blank" rel="noopener noreferrer">
+                    <a href="{project.live_url}" target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="mr-2 h-4 w-4" />
                       {language === "hi" ? "लाइव डेमो" : "Live Demo"}
                     </a>

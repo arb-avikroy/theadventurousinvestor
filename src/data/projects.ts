@@ -20,7 +20,9 @@ export const featuredProjects: Project[] = [
     longDescription: { en: "A comprehensive enterprise solution built on SAPUI5 framework that revolutionizes data entry workflows with bulk Excel processing.", hi: "SAPUI5 फ्रेमवर्क पर बनाया गया एक व्यापक एंटरप्राइज समाधान।" },
     tags: ["SAPUI5", "OData", "Excel", "Enterprise"],
     features: { en: ["Bulk Excel upload", "Real-time validation", "OData integration", "Error handling"], hi: ["बल्क Excel अपलोड", "रियल-टाइम वैलिडेशन", "OData इंटीग्रेशन", "एरर हैंडलिंग"] },
-    techStack: ["SAPUI5", "JavaScript", "OData", "SAP HANA"], status: "coming-soon"
+    techStack: ["SAPUI5", "JavaScript", "OData", "SAP HANA"], status: "coming-soon",
+    github_Url: "",
+    live_Url: ""
   },
   {
     id: 2, slug: "ai-video-generation-pipeline",
@@ -29,7 +31,9 @@ export const featuredProjects: Project[] = [
     longDescription: { en: "An end-to-end automated video production system that transforms ideas into polished videos.", hi: "एक एंड-टू-एंड ऑटोमेटेड वीडियो प्रोडक्शन सिस्टम।" },
     tags: ["AI", "Automation", "Video", "LLM"],
     features: { en: ["AI script generation", "Voice synthesis", "Automated video assembly", "Multi-language"], hi: ["AI स्क्रिप्ट जेनरेशन", "वॉइस सिंथेसिस", "ऑटोमेटेड वीडियो", "मल्टी-लैंग्वेज"] },
-    techStack: ["Python", "GPT-4", "ElevenLabs", "FFmpeg"], status: "coming-soon"
+    techStack: ["Python", "GPT-4", "ElevenLabs", "FFmpeg"], status: "coming-soon",
+    github_Url: "",
+    live_Url: ""
   },
   {
     id: 3, slug: "n8n-content-automation",
@@ -38,7 +42,9 @@ export const featuredProjects: Project[] = [
     longDescription: { en: "A sophisticated workflow automation platform built on n8n.", hi: "n8n पर बनाया गया एक परिष्कृत वर्कफ़्लो ऑटोमेशन प्लेटफॉर्म।" },
     tags: ["n8n", "Workflow", "LLM", "Automation"],
     features: { en: ["Visual workflow builder", "AI content writing", "Social media scheduling", "Analytics"], hi: ["विज़ुअल वर्कफ़्लो बिल्डर", "AI कंटेंट राइटिंग", "सोशल मीडिया शेड्यूलिंग", "एनालिटिक्स"] },
-    techStack: ["n8n", "Node.js", "OpenAI API", "PostgreSQL"], status: "coming-soon"
+    techStack: ["n8n", "Node.js", "OpenAI API", "PostgreSQL"], status: "coming-soon",
+    github_Url: "",
+    live_Url: ""
   },
   {
     id: 4, slug: "fiori-nodejs-fullstack",
@@ -47,7 +53,9 @@ export const featuredProjects: Project[] = [
     longDescription: { en: "A modern full-stack application bridging SAP and modern web technologies.", hi: "SAP और आधुनिक वेब तकनीकों को जोड़ने वाला एप्लीकेशन।" },
     tags: ["SAP Fiori", "Node.js", "REST API", "MongoDB"],
     features: { en: ["SAP Fiori UI", "RESTful API", "MongoDB storage", "JWT auth"], hi: ["SAP Fiori UI", "RESTful API", "MongoDB स्टोरेज", "JWT ऑथ"] },
-    techStack: ["SAP Fiori", "Node.js", "Express", "MongoDB"], status: "coming-soon"
+    techStack: ["SAP Fiori", "Node.js", "Express", "MongoDB"], status: "coming-soon",
+    github_Url: "",
+    live_Url: ""
   },
 ];
 
@@ -78,8 +86,9 @@ export const aiProjects = {
     { id: "gpt-career", name: { en: "Youtube Script Writer", hi: "यूट्यूब स्क्रिप्ट राइटर" }, description: { en: "Consistent YouTube scriptwriting Gem for your channel", hi: "आपके चैनल के लिए लगातार YouTube स्क्रिप्टराइटिंग का बेहतरीन तरीका।" }, link: "https://gemini.google.com/gem/1mm5mzIjQxM00RQNo84iNBRWiruXVZfZM?usp=sharing", type: "Custom GPT/Gem" },
   ],
   projects: [
-    { id: "ai-content", name: { en: "AI Content Generator (Come here later)", hi: "AI कंटेंट जेनरेटर" }, description: { en: "Multi-platform content generation.", hi: "मल्टी-प्लेटफॉर्म कंटेंट जेनरेशन।" }, status: "Active", tech: ["GPT-4", "Python"] },
-    { id: "voice-clone", name: { en: "Voice Clone Studio (Come here later)", hi: "वॉइस क्लोन स्टूडियो" }, description: { en: "Natural voice clones.", hi: "प्राकृतिक वॉइस क्लोन।" }, status: "Beta", tech: ["ElevenLabs", "React"] },
+    { id: "ai-content", name: { en: "AI Content Generator (Come here later)", hi: "AI कंटेंट जेनरेटर" }, description: { en: "Multi-platform content generation.", hi: "मल्टी-प्लेटफॉर्म कंटेंट जेनरेशन।" }, status: "Active", tech: ["GPT-4", "Python"],  },
+    { id: "voice-clone", name: { en: "Voice Clone Studio (Come here later)", hi: "वॉइस क्लोन स्टूडियो" }, description: { en: "Natural voice clones.", hi: "प्राकृतिक वॉइस क्लोन।" }, status: "Beta", tech: ["ElevenLabs", "React"], github_Url: "",
+    live_Url: "" },
   ],
   articles: [
     { id: "intro-llm", title: { en: "Introduction to LLMs (Updating)", hi: "LLMs का परिचय" }, excerpt: { en: "Guide to understanding LLMs.", hi: "LLMs को समझने की गाइड।" }, readTime: "8 min", date: "2024-01-15" },
