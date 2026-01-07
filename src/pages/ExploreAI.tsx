@@ -177,7 +177,7 @@ const ExploreAI = () => {
 
                 {/* Articles Section */}
                 <div>
-                  <div className="flex items-center gap-3 mb-6">
+                  {/* <div className="flex items-center gap-3 mb-6">
                     <FileText className="h-6 w-6 text-primary" />
                     <h2 className="text-2xl font-bold text-foreground">
                       {language === "hi" ? "लेख" : "Articles"}
@@ -198,7 +198,7 @@ const ExploreAI = () => {
                         </div>
                       </GlassCard>
                     ))}
-                  </div>
+                  </div> */}
                 </div>
               </>
             )}
