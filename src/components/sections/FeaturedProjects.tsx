@@ -19,7 +19,6 @@ const fallbackProjectsEn = [
     description_hi: "बड़े पैमाने पर डेटा प्रोसेसिंग के लिए रियल-टाइम वैलिडेशन, OData इंटीग्रेशन और स्मार्ट एरर हैंडलिंग के साथ एंटरप्राइज एप्लीकेशन।",
     tags: ["SAPUI5", "OData", "Excel", "Enterprise"],
     is_featured: true,
-    github_url: "",
   },
   {
     id: "2",
@@ -30,7 +29,6 @@ const fallbackProjectsEn = [
     description_hi: "स्क्रिप्ट जेनरेशन, वॉइस सिंथेसिस और वीडियो असेंबली के लिए मल्टीपल LLMs का उपयोग करने वाली ऑटोमेटेड कंटेंट पाइपलाइन।",
     tags: ["AI", "Automation", "Video", "LLM"],
     is_featured: true,
-    github_url: "",
   },
   {
     id: "3",
@@ -41,7 +39,6 @@ const fallbackProjectsEn = [
     description_hi: "AI-पावर्ड एन्हांसमेंट के साथ मल्टीपल प्लेटफॉर्म्स पर कंटेंट क्रिएशन, शेड्यूलिंग और डिस्ट्रीब्यूशन को ऑर्केस्ट्रेट करने वाला वर्कफ़्लो ऑटोमेशन सिस्टम।",
     tags: ["n8n", "Workflow", "LLM", "Automation"],
     is_featured: true,
-    github_url: "",
   },
   {
     id: "4",
@@ -52,14 +49,13 @@ const fallbackProjectsEn = [
     description_hi: "SAP Fiori फ्रंटएंड को Node.js बैकएंड, MongoDB डेटाबेस और RESTful API आर्किटेक्चर के साथ जोड़ने वाला मॉडर्न फुल-स्टैक एप्लीकेशन।",
     tags: ["SAP Fiori", "Node.js", "REST API", "MongoDB"],
     is_featured: true,
-    github_url: "",
   },
 ];
 
 export const FeaturedProjects = () => {
   const { t, language } = useLanguage();
   const { data: dbProjects, isLoading } = useProjects(true);
-
+  
   // Use database projects if available, otherwise use fallback
   const projects = dbProjects && dbProjects.length > 0 ? dbProjects : fallbackProjectsEn;
 
@@ -88,17 +84,7 @@ export const FeaturedProjects = () => {
                   <h3 className="text-primary font-semibold text-xl mb-3">
                     {language === "hi" ? project.title_hi : project.title_en}
                   </h3>
-                  {/* <ExternalLink href={project.github_url} className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" /> */}
-                  {project.github_url && (
-                    <a
-                      href={project.github_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <ExternalLink className="h-4 w-4 text-muted-foreground" />
-                    </a>
-                  )}
+                  <ExternalLink className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
                   {language === "hi" ? project.description_hi : project.description_en}

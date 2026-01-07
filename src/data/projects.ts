@@ -8,8 +8,8 @@ export interface Project {
   features: { en: string[]; hi: string[] };
   techStack: string[];
   status: "completed" | "in-progress" | "coming-soon";
-  github_Url?: string;
-  live_Url?: string;
+  githubUrl?: string;
+  liveUrl?: string;
 }
 
 export const featuredProjects: Project[] = [
