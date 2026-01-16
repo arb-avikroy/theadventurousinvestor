@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -139,8 +140,12 @@ const WatchRead = () => {
   }, [cheatsheets, selectedCheatsheetTags]);
 
   return (
-    <Layout>
-      <section className="py-24 px-4 min-h-screen">
+    <>
+      <Helmet>
+        <title>{language === "hi" ? "देखें और पढ़ें | The Adventurous Investor" : "Watch & Read More | The Adventurous Investor"}</title>
+      </Helmet>
+      <Layout>
+        <section className="py-24 px-4 min-h-screen">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -651,6 +656,7 @@ const WatchRead = () => {
         </div>
       </section>
     </Layout>
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -97,6 +98,21 @@ const BlogDetail = () => {
   // Use database blog if available, otherwise use fallback
   const blog = dbBlog || fallbackBlogs[blogId || ""];
   
+  // Set dynamic, localized document.title
+  useEffect(() => {
+    if (!blog) return;
+    const siteName = "The Adventurous Investor";
+    const articleTitle = language === "hi" ? blog.title_hi : blog.title_en;
+    document.title = `${articleTitle} | ${siteName}`;
+    return () => {
+      document.title = siteName;
+    };
+  }, [blog, language]);
+
+  // Prepare SEO meta, canonical, and hreflang URLs
+  const siteUrl = "https://www.adventurousinvestorhub.com";
+  // Prepare SEO meta and canonical URL for HashRouter
+  const canonicalUrl = `${siteUrl}/#/blog/${blog?.slug}`;
   // Bookmark functionality
   const { data: isBookmarked } = useIsBookmarked("blog", blog?.id || "");
   const toggleBookmark = useToggleBookmark();
@@ -170,8 +186,23 @@ const BlogDetail = () => {
   }
 
   return (
-    <Layout>
-      <section className="py-24 px-4 min-h-screen">
+    <>
+      <Helmet>
+        <title>{`${language === "hi" ? blog.title_hi : blog.title_en} | The Adventurous Investor`}</title>
+        <meta name="description" content={language === "hi" ? blog.excerpt_hi : blog.excerpt_en} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={language === "hi" ? blog.title_hi : blog.title_en} />
+        <meta property="og:description" content={language === "hi" ? blog.excerpt_hi : blog.excerpt_en} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content="https://www.adventurousinvestorhub.com/og-default.png" />
+        <meta name="twitter:image" content="https://www.adventurousinvestorhub.com/og-default.png" />
+        <meta property="og:locale" content={language === "hi" ? "hi_IN" : "en_US"} />
+        <meta name="twitter:title" content={language === "hi" ? blog.title_hi : blog.title_en} />
+        <meta name="twitter:description" content={language === "hi" ? blog.excerpt_hi : blog.excerpt_en} />
+      </Helmet>
+      <Layout>
+        <section className="py-24 px-4 min-h-screen">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -268,6 +299,7 @@ const BlogDetail = () => {
         </div>
       </section>
     </Layout>
+    </>
   );
 };
 

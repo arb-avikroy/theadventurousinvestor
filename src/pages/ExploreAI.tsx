@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Layout } from "@/components/layout/Layout";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/button";
@@ -52,8 +53,12 @@ const ExploreAI = () => {
     }));
 
   return (
-    <Layout>
-      <section className="py-24 px-4 min-h-screen">
+    <>
+      <Helmet>
+        <title>{language === "hi" ? "एआई एक्सप्लोर करें | The Adventurous Investor" : "Explore AI | The Adventurous Investor"}</title>
+      </Helmet>
+      <Layout>
+        <section className="py-24 px-4 min-h-screen">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -228,6 +233,7 @@ const ExploreAI = () => {
         </div>
       </section>
     </Layout>
+    </>
   );
 };
 
