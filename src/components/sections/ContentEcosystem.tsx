@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/button";
-import { Play, BookOpen, Loader2 } from "lucide-react";
+import { Play, BookOpen, Loader2, Youtube } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
 import { useContentCategories } from "@/hooks/useContentCategories";
@@ -74,7 +74,7 @@ export const ContentEcosystem = () => {
           <Button
             variant="outline"
             className="border-primary/40 text-primary hover:bg-primary/10"
-            onClick={() => window.open("https://www.youtube.com/@theadventurousinvestor", "_blank")}
+            onClick={() => window.open("https://www.youtube.com/@theadventurousinvestor?sub_confirmation=1", "_blank")}
           >
             <Play className="mr-2 h-4 w-4" />
             {t("contentSection.watchMore")}

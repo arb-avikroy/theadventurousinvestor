@@ -111,8 +111,8 @@ const BlogDetail = () => {
 
   // Prepare SEO meta, canonical, and hreflang URLs
   const siteUrl = "https://www.adventurousinvestorhub.com";
-  // Prepare SEO meta and canonical URL for HashRouter
-  const canonicalUrl = `${siteUrl}/#/blog/${blog?.slug}`;
+  // Prepare SEO meta and canonical URL for BrowserRouter
+  const canonicalUrl = `${siteUrl}/blog/${blog?.slug}`;
   // Bookmark functionality
   const { data: isBookmarked } = useIsBookmarked("blog", blog?.id || "");
   const toggleBookmark = useToggleBookmark();

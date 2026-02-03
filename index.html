@@ -9,6 +9,16 @@
     <meta name="keywords" content="SAP, AI, Automation, Content Creation, SAPUI5, Node.js, n8n, AI Video">
     <meta name="author" content="Avik Barman" />
 
+    <!-- GitHub Pages SPA redirect handler -->
+    <script>
+      (function() {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
     
     
     <meta property="og:type" content="website" />
