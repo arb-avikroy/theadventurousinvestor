@@ -368,6 +368,103 @@ export interface Database {
           created_at?: string
         }
       }
+      ai_tools: {
+        Row: {
+          id: string
+          name: string
+          description: string
+          category: string
+          model_type: string[]
+          url: string
+          logo: string | null
+          pricing: string
+          tags: string[]
+          display_order: number
+          is_active: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          description: string
+          category: string
+          model_type?: string[]
+          url: string
+          logo?: string | null
+          pricing: string
+          tags?: string[]
+          display_order?: number
+          is_active?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string
+          category?: string
+          model_type?: string[]
+          url?: string
+          logo?: string | null
+          pricing?: string
+          tags?: string[]
+          display_order?: number
+          is_active?: boolean
+          created_at?: string
+        }
+      }
+      user_curated_ai_tools: {
+        Row: {
+          id: string
+          name: string
+          description: string
+          category: string
+          model_type: string[]
+          url: string
+          logo: string | null
+          pricing: string
+          tags: string[]
+          submitted_by: string | null
+          submitted_by_email: string | null
+          ip_address: string | null
+          is_approved: boolean
+          is_active: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          description: string
+          category: string
+          model_type?: string[]
+          url: string
+          logo?: string | null
+          pricing: string
+          tags?: string[]
+          submitted_by?: string | null
+          submitted_by_email?: string | null
+          ip_address?: string | null
+          is_approved?: boolean
+          is_active?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string
+          category?: string
+          model_type?: string[]
+          url?: string
+          logo?: string | null
+          pricing?: string
+          tags?: string[]
+          submitted_by?: string | null
+          submitted_by_email?: string | null
+          ip_address?: string | null
+          is_approved?: boolean
+          is_active?: boolean
+          created_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never

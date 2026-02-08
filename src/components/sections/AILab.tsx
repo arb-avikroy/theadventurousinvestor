@@ -37,7 +37,7 @@ export const AILab = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             viewport={{ once: true }}
-            className="mt-8"
+            className="mt-8 flex flex-wrap gap-4"
           >
             <Button
               className="bg-primary text-primary-foreground hover:bg-primary/90"
@@ -45,7 +45,16 @@ export const AILab = () => {
             >
               <Link to="/explore-ai">
                 <Sparkles className="mr-2 h-4 w-4" />
-                {t("lab.explore")}
+                {t("lab.exploreProjects")}
+              </Link>
+            </Button>
+            <Button
+              className="bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-primary/20"
+              asChild
+            >
+              <Link to="/ai-tools">
+                <Bot className="mr-2 h-4 w-4" />
+                {t("lab.exploreTools")}
               </Link>
             </Button>
           </motion.div>

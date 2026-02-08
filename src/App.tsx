@@ -12,6 +12,7 @@ import ProjectDetail from "./pages/ProjectDetail";
 import OtherProjects from "./pages/OtherProjects";
 import ExploreAI from "./pages/ExploreAI";
 import WatchRead from "./pages/WatchRead";
+import AITools from "./pages/AITools";
 const queryClient = new QueryClient();
 import ScrollToTop from './components/ScrollToTop';
 import BlogDetail from './pages/BlogDetail';
@@ -35,6 +36,7 @@ const App = () => (
                 <Route path="/projects/:slug" element={<ProjectDetail />} />
                 <Route path="/other-projects" element={<OtherProjects />} />
                 <Route path="/explore-ai" element={<ExploreAI />} />
+                <Route path="/ai-tools" element={<AITools />} />
                 <Route path="/watch-read" element={<WatchRead />} />
                 <Route path="/blog/:blogId" element={<BlogDetail />} />
                 <Route path="*" element={<NotFound />} />

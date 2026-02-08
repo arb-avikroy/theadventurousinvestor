@@ -60,6 +60,8 @@ export const en = {
     multiModel: "multi-model LLM orchestration",
     paragraph2End: "—combining the strengths of different AI models for tasks ranging from video script generation to automated research synthesis. Every experiment teaches something new about the intersection of human creativity and machine intelligence.",
     explore: "Explore AI Projects",
+    exploreProjects: "Explore AI Projects (Own Products)",
+    exploreTools: "Explore AI Tools (Third-party)",
   },
   contentSection: {
     handwritten: "content universe",
