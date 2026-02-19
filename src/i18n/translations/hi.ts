@@ -67,7 +67,7 @@ export const hi = {
     handwritten: "कंटेंट यूनिवर्स",
     title: "द एडवेंचरस इन्वेस्टर",
     watchMore: "YouTube चैनल",
-    watchRead: "देखें और पढ़ें",
+    watchRead: "देखें, पढ़ें और पाएँ अधिक",
   },
   techStack: {
     handwritten: "टूलकिट",

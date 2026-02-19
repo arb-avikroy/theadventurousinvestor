@@ -67,7 +67,7 @@ export const en = {
     handwritten: "content universe",
     title: "The Adventurous Investor",
     watchMore: "YouTube Channel",
-    watchRead: "Watch & Read More",
+    watchRead: "Watch, Read & Get More",
   },
   techStack: {
     handwritten: "the toolkit",

@@ -5,7 +5,7 @@ import { Layout } from "@/components/layout/Layout";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Play, BookOpen, Clock, Calendar, Loader2, Bookmark, BookmarkX, X, FileText, Download } from "lucide-react";
+import { ArrowLeft, Play, BookOpen, Clock, Calendar, Loader2, Bookmark, BookmarkX, X, FileText, Download, Gift } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { contentData } from "@/data/projects";
 import { motion } from "framer-motion";
@@ -142,7 +142,7 @@ const WatchRead = () => {
   return (
     <>
       <Helmet>
-        <title>{language === "hi" ? "देखें और पढ़ें | The Adventurous Investor" : "Watch & Read More | The Adventurous Investor"}</title>
+        <title>{language === "hi" ? "देखें, पढ़ें और पाएँ अधिक | The Adventurous Investor" : "Watch, Read & Get More | The Adventurous Investor"}</title>
       </Helmet>
       <Layout>
         <section className="py-24 px-4 min-h-screen">
@@ -161,7 +161,7 @@ const WatchRead = () => {
 
             <div className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-                {language === "hi" ? "देखें और पढ़ें" : "Watch & Read More"}
+                {language === "hi" ? "देखें, पढ़ें और पाएँ अधिक" : "Watch, Read & Get More"}
               </h1>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 {language === "hi"
@@ -171,7 +171,7 @@ const WatchRead = () => {
             </div>
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4 mb-8">
+              <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-5 mb-8">
                 <TabsTrigger value="blogs" className="flex items-center gap-2">
                   <BookOpen className="h-4 w-4" />
                   <span className="hidden sm:inline">{language === "hi" ? "ब्लॉग" : "Blogs"}</span>
@@ -183,6 +183,10 @@ const WatchRead = () => {
                 <TabsTrigger value="cheatsheets" className="flex items-center gap-2">
                   <FileText className="h-4 w-4" />
                   <span className="hidden sm:inline">{language === "hi" ? "चीटशीट" : "Cheatsheets"}</span>
+                </TabsTrigger>
+                <TabsTrigger value="freebies" className="flex items-center gap-2">
+                  <Gift className="h-4 w-4" />
+                  <span className="hidden sm:inline">{language === "hi" ? "डिस्काउंट कोड्स" : "Discount Codes"}</span>
                 </TabsTrigger>
                 <TabsTrigger value="videos" className="flex items-center gap-2">
                   <Play className="h-4 w-4" />
@@ -310,6 +314,49 @@ const WatchRead = () => {
                     ))}
                   </div>
                 )}
+              </TabsContent>
+
+              {/* DISCOUNT CODES TAB */}
+              <TabsContent value="freebies">
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-semibold text-foreground mb-2">
+                    {language === "hi" ? "डिस्काउंट कोड्स" : "Discount Codes"}
+                  </h3>
+                  <p className="text-muted-foreground max-w-2xl mx-auto">
+                    {language === "hi"
+                      ? "यहाँ आपको सुझाए गए टूल्स और सेवाओं के लिए डिस्काउंट कोड्स मिलेंगे।"
+                      : "Find discount codes for recommended tools and services here."}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <GlassCard className="p-6">
+                    <div className="flex items-start justify-between mb-3">
+                      <Gift className="h-8 w-8 text-primary" />
+                    </div>
+                    <h4 className="text-primary font-semibold text-lg mb-2">
+                      Hostinger - 20% discount code
+                    </h4>
+                    <p className="text-muted-foreground text-sm mb-4">
+                      {language === "hi"
+                        ? "होस्टिंग और डोमेन प्लान्स पर 20% की छूट पाएं।"
+                        : "Get 20% off on hosting and domain plans."}
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="border-primary/40 text-primary hover:bg-primary/10"
+                      asChild
+                    >
+                      <a
+                        href="https://tinyurl.com/53cmbm7e"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {language === "hi" ? "डिस्काउंट लें" : "Get Discount"}
+                      </a>
+                    </Button>
+                  </GlassCard>
+                </div>
               </TabsContent>
 
               {/* VIDEOS TAB */}
