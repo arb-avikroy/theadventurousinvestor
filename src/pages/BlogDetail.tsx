@@ -232,7 +232,7 @@ const BlogDetail = () => {
                   </div>
                   <span className="flex items-center gap-1 text-sm">
                     <Calendar className="h-4 w-4" />
-                    {blog.publish_date}
+                    {blog.created_at.substring(0, 10)}
                   </span>
                   <span className="flex items-center gap-1 text-sm">
                     <Clock className="h-4 w-4" />

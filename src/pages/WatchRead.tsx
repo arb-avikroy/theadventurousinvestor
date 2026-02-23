@@ -521,7 +521,7 @@ const WatchRead = () => {
                             </span>
                             <span className="flex items-center gap-1">
                               <Calendar className="h-3 w-3" />
-                              {blog.publish_date}
+                              {blog.created_at.substring(0, 10)}
                             </span>
                           </div>
                           <Button
@@ -670,7 +670,7 @@ const WatchRead = () => {
                             </span>
                             <span className="flex items-center gap-1">
                               <Calendar className="h-3 w-3" />
-                              {blog.publish_date}
+                              {blog.created_at.substring(0, 10)}
                             </span>
                           </div>
                           <div className="flex items-center gap-1">

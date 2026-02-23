@@ -26,7 +26,7 @@ export const useBlogs = () => {
         .from('content_blogs')
         .select('*')
         .eq('is_published', true)
-        .order('publish_date', { ascending: false });
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       return data as Blog[];
