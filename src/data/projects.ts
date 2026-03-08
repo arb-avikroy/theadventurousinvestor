@@ -89,6 +89,7 @@ export const aiProjects = {
     { id: "ai-content", name: { en: "AI Content Generator (Come here later)", hi: "AI कंटेंट जेनरेटर" }, description: { en: "Multi-platform content generation.", hi: "मल्टी-प्लेटफॉर्म कंटेंट जेनरेशन।" }, status: "Active", tech: ["GPT-4", "Python"],  },
     { id: "voice-clone", name: { en: "Voice Clone Studio (Come here later)", hi: "वॉइस क्लोन स्टूडियो" }, description: { en: "Natural voice clones.", hi: "प्राकृतिक वॉइस क्लोन।" }, status: "Beta", tech: ["ElevenLabs", "React"], github_Url: "",
     live_Url: "" },
+    { id: "whisprchat", name: { en: "WhisprChat - Best Omegle Alternative", hi: "WhisprChat - सर्वश्रेष्ठ Omegle विकल्प" }, description: { en: "A modern, anonymous video and text chat platform connecting strangers worldwide. Features real-time matching, interest-based pairing, and a clean, safe user experience — the best Omegle alternative built for today's web.", hi: "दुनिया भर में अजनबियों को जोड़ने वाला एक आधुनिक, गुमनाम वीडियो और टेक्स्ट चैट प्लेटफॉर्म। रियल-टाइम मैचिंग और सुरक्षित अनुभव के साथ।" }, status: "Active", tech: ["React", "WebRTC", "Node.js", "Socket.IO"], github_Url: "https://github.com/arb-avikroy/whisprchat", live_Url: "https://whisprchat.adventurousinvestorhub.com" },
   ],
   articles: [
     { id: "intro-llm", title: { en: "Introduction to LLMs (Updating)", hi: "LLMs का परिचय" }, excerpt: { en: "Guide to understanding LLMs.", hi: "LLMs को समझने की गाइड।" }, readTime: "8 min", date: "2024-01-15" },
