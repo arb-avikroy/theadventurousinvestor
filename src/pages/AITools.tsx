@@ -778,6 +778,7 @@ const AITools = () => {
         </div>
       </div>
     </Layout>
+    </>
   );
 };
 
