@@ -1,5 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
-import { Helmet } from "react-helmet-async";
+import { SEO, buildPersonSchema, buildWebSiteSchema, buildBreadcrumbSchema } from "@/components/SEO";
 import { Hero } from "@/components/sections/Hero";
 import { AboutPreview } from "@/components/sections/AboutPreview";
 import { SkillsSnapshot } from "@/components/sections/SkillsSnapshot";
@@ -10,12 +10,23 @@ import { TechStack } from "@/components/sections/TechStack";
 import { Metrics } from "@/components/sections/Metrics";
 import { Contact } from "@/components/sections/Contact";
 
+const SITE_URL = "https://www.adventurousinvestorhub.com";
+
 const Index = () => {
   return (
     <>
-      <Helmet>
-        <title>The Adventurous Investor | AI | Content | Finance | Growth</title>
-      </Helmet>
+      <SEO
+        title="Avik Barman — SAP Consultant, AI Builder & Content Creator"
+        description="Multidisciplinary technologist building intelligent systems at the intersection of SAP, AI, automation, and content creation. Explore projects, blogs, tools & more."
+        canonical={SITE_URL}
+        jsonLd={[
+          buildPersonSchema(),
+          buildWebSiteSchema(),
+          buildBreadcrumbSchema([
+            { name: "Home", url: SITE_URL },
+          ]),
+        ]}
+      />
       <Layout>
         <Hero />
         <AboutPreview />

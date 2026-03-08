@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { SEO, buildBreadcrumbSchema } from "@/components/SEO";
 import { Layout } from "@/components/layout/Layout";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/button";
@@ -9,11 +9,12 @@ import { aiProjects } from "@/data/projects";
 import { motion } from "framer-motion";
 import { useAIProjectsByCategories } from "@/hooks/useAIProjects";
 
+const SITE_URL = "https://www.adventurousinvestorhub.com";
+
 const ExploreAI = () => {
   const { language } = useLanguage();
   const { data: dbData, isLoading } = useAIProjectsByCategories();
 
-  // Use database data if available, otherwise use fallback
   const community = dbData?.community && dbData.community.length > 0
     ? dbData.community
     : aiProjects.community.map(item => ({
@@ -54,9 +55,17 @@ const ExploreAI = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{language === "hi" ? "एआई एक्सप्लोर करें | The Adventurous Investor" : "Explore AI | The Adventurous Investor"}</title>
-      </Helmet>
+      <SEO
+        title={language === "hi" ? "AI प्रोजेक्ट्स खोजें — कस्टम GPTs, ऑटोमेशन और प्रोडक्ट्स" : "Explore AI Projects — Custom GPTs, Automation & Products"}
+        description={language === "hi"
+          ? "AI और मशीन लर्निंग में प्रयोग, कस्टम GPTs, WhisprChat और ऑटोमेशन प्रोजेक्ट्स देखें।"
+          : "Discover AI experiments, custom GPTs, WhisprChat, automation projects, and own AI products by Avik Barman."}
+        canonical={`${SITE_URL}/explore-ai`}
+        jsonLd={buildBreadcrumbSchema([
+          { name: "Home", url: SITE_URL },
+          { name: "Explore AI", url: `${SITE_URL}/explore-ai` },
+        ])}
+      />
       <Layout>
         <section className="py-24 px-4 min-h-screen">
         <div className="max-w-6xl mx-auto">
@@ -140,7 +149,7 @@ const ExploreAI = () => {
                   <div className="flex items-center gap-3 mb-6">
                     <Folder className="h-6 w-6 text-primary" />
                     <h2 className="text-2xl font-bold text-foreground">
-                      {language === "hi" ? "प्रोजेक्ट्स" : "Projects"}
+                      {language === "hi" ? "प्रोजेक्ट्स (खुद के प्रोडक्ट्स)" : "Projects (Own Products)"}
                     </h2>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
