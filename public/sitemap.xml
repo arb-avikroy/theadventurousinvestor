@@ -25,6 +25,36 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.adventurousinvestorhub.com/ai-tools</loc>
+    <lastmod>2026-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.adventurousinvestorhub.com/projects/sapui5-bulk-excel-upload</loc>
+    <lastmod>2026-03-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.adventurousinvestorhub.com/projects/ai-video-generation-pipeline</loc>
+    <lastmod>2026-03-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.adventurousinvestorhub.com/projects/n8n-content-automation</loc>
+    <lastmod>2026-03-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.adventurousinvestorhub.com/projects/fiori-nodejs-fullstack</loc>
+    <lastmod>2026-03-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.adventurousinvestorhub.com/blog/ai-skills-professionals</loc>
     <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
