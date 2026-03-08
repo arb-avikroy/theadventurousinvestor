@@ -521,7 +521,7 @@ const WatchRead = () => {
                             </span>
                             <span className="flex items-center gap-1">
                               <Calendar className="h-3 w-3" />
-                              {blog.created_at.substring(0, 10)}
+{blog.bookmarked_at?.substring(0, 10)}
                             </span>
                           </div>
                           <Button
