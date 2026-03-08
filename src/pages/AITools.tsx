@@ -30,7 +30,7 @@ import { modelTypes, categories } from "@/data/aiTools";
 import { useAITools, useUserCuratedAITools, useSubmitAITool, type NewUserCuratedTool } from "@/hooks/useAITools";
 import { ExternalLink, Search, Bot, Filter, X, Loader2, Plus, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Helmet } from "react-helmet-async";
+import { SEO, buildBreadcrumbSchema } from "@/components/SEO";
 import { useToast } from "@/hooks/use-toast";
 
 const AITools = () => {
