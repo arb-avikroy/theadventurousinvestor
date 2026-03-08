@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import { SEO, buildArticleSchema, buildBreadcrumbSchema } from "@/components/SEO";
 import { Link, useParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -10,6 +10,8 @@ import { motion } from "framer-motion";
 import { useBlog } from "@/hooks/useBlogs";
 import { useIsBookmarked, useToggleBookmark } from "@/hooks/useBookmarks";
 import { useToast } from "@/hooks/use-toast";
+
+const SITE_URL = "https://www.adventurousinvestorhub.com";
 
 // Fallback blog data for when database is empty
 const fallbackBlogs: Record<string, any> = {
@@ -92,28 +94,19 @@ const BlogDetail = () => {
   const { blogId } = useParams();
   const { toast } = useToast();
   
-  // Fetch from database
   const { data: dbBlog, isLoading } = useBlog(blogId || "");
-  
-  // Use database blog if available, otherwise use fallback
   const blog = dbBlog || fallbackBlogs[blogId || ""];
   
-  // Set dynamic, localized document.title
   useEffect(() => {
     if (!blog) return;
     const siteName = "The Adventurous Investor";
     const articleTitle = language === "hi" ? blog.title_hi : blog.title_en;
     document.title = `${articleTitle} | ${siteName}`;
-    return () => {
-      document.title = siteName;
-    };
+    return () => { document.title = siteName; };
   }, [blog, language]);
 
-  // Prepare SEO meta, canonical, and hreflang URLs
-  const siteUrl = "https://www.adventurousinvestorhub.com";
-  // Prepare SEO meta and canonical URL for BrowserRouter
-  const canonicalUrl = `${siteUrl}/blog/${blog?.slug}`;
-  // Bookmark functionality
+  const canonicalUrl = `${SITE_URL}/blog/${blog?.slug || blogId}`;
+
   const { data: isBookmarked } = useIsBookmarked("blog", blog?.id || "");
   const toggleBookmark = useToggleBookmark();
 
@@ -130,23 +123,16 @@ const BlogDetail = () => {
       }
     } else {
       navigator.clipboard.writeText(window.location.href);
-      toast({
-        title: language === "hi" ? "लिंक कॉपी किया गया!" : "Link copied!",
-      });
+      toast({ title: language === "hi" ? "लिंक कॉपी किया गया!" : "Link copied!" });
     }
   };
 
   const handleBookmark = async () => {
     if (!blog?.id) return;
-    
     try {
-      const result = await toggleBookmark.mutateAsync({
-        contentType: "blog",
-        contentId: blog.id,
-      });
-      
+      const result = await toggleBookmark.mutateAsync({ contentType: "blog", contentId: blog.id });
       toast({
-        title: result.action === "added" 
+        title: result.action === "added"
           ? (language === "hi" ? "बुकमार्क जोड़ा गया!" : "Bookmark added!")
           : (language === "hi" ? "बुकमार्क हटाया गया!" : "Bookmark removed!"),
       });
@@ -185,24 +171,37 @@ const BlogDetail = () => {
     );
   }
 
+  const articleTitle = language === "hi" ? blog.title_hi : blog.title_en;
+  const articleDesc = language === "hi" ? blog.excerpt_hi : blog.excerpt_en;
+
   return (
     <>
-      <Helmet>
-        <title>{`${language === "hi" ? blog.title_hi : blog.title_en} | The Adventurous Investor`}</title>
-        <meta name="description" content={language === "hi" ? blog.excerpt_hi : blog.excerpt_en} />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content={language === "hi" ? blog.title_hi : blog.title_en} />
-        <meta property="og:description" content={language === "hi" ? blog.excerpt_hi : blog.excerpt_en} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:image" content="https://www.adventurousinvestorhub.com/og-default.png" />
-        <meta name="twitter:image" content="https://www.adventurousinvestorhub.com/og-default.png" />
-        <meta property="og:locale" content={language === "hi" ? "hi_IN" : "en_US"} />
-        <meta name="twitter:title" content={language === "hi" ? blog.title_hi : blog.title_en} />
-        <meta name="twitter:description" content={language === "hi" ? blog.excerpt_hi : blog.excerpt_en} />
-      </Helmet>
+      <SEO
+        title={articleTitle}
+        description={articleDesc}
+        canonical={canonicalUrl}
+        type="article"
+        publishedTime={blog.publish_date || blog.created_at?.substring(0, 10)}
+        author={blog.author_name || "Avik Barman"}
+        tags={blog.tags}
+        jsonLd={[
+          buildArticleSchema({
+            title: articleTitle,
+            description: articleDesc,
+            url: canonicalUrl,
+            publishedTime: blog.publish_date || blog.created_at?.substring(0, 10) || "",
+            author: blog.author_name || "Avik Barman",
+            tags: blog.tags || [],
+          }),
+          buildBreadcrumbSchema([
+            { name: "Home", url: SITE_URL },
+            { name: "Watch & Read", url: `${SITE_URL}/watch-read` },
+            { name: articleTitle, url: canonicalUrl },
+          ]),
+        ]}
+      />
       <Layout>
-        <section className="py-24 px-4 min-h-screen">
+        <article className="py-24 px-4 min-h-screen">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -217,23 +216,23 @@ const BlogDetail = () => {
             </Link>
 
             <GlassCard className="p-8 mb-8">
-              <div className="mb-6">
+              <header className="mb-6">
                 <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-                  {language === "hi" ? blog.title_hi : blog.title_en}
+                  {articleTitle}
                 </h1>
 
                 <div className="flex flex-wrap gap-2 mb-6">
-                  <p>{language === "hi" ? blog.excerpt_hi : blog.excerpt_en}</p>
+                  <p>{articleDesc}</p>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-4 text-muted-foreground mb-6">
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium">{blog.author_name}</span>
                   </div>
-                  <span className="flex items-center gap-1 text-sm">
+                  <time className="flex items-center gap-1 text-sm" dateTime={blog.publish_date || blog.created_at?.substring(0, 10)}>
                     <Calendar className="h-4 w-4" />
-                    {blog.created_at.substring(0, 10)}
-                  </span>
+                    {(blog.publish_date || blog.created_at)?.substring(0, 10)}
+                  </time>
                   <span className="flex items-center gap-1 text-sm">
                     <Clock className="h-4 w-4" />
                     {blog.read_time}
@@ -275,29 +274,29 @@ const BlogDetail = () => {
                       : (language === "hi" ? "बुकमार्क करें" : "Bookmark")}
                   </Button>
                 </div>
-              </div>
+              </header>
             </GlassCard>
 
             <GlassCard className="p-8">
-              <article className="prose prose-invert max-w-none">
+              <div className="prose prose-invert max-w-none">
                 <div
                   className="text-muted-foreground leading-relaxed space-y-4"
                   dangerouslySetInnerHTML={{
                     __html: (language === "hi" ? blog.content_hi : blog.content_en)
-                      ?.replace(/^# (.+)$/gm, '<h1 class="text-3xl font-bold text-foreground mt-8 mb-4">$1</h1>')
-                      .replace(/^## (.+)$/gm, '<h2 class="text-2xl font-semibold text-foreground mt-6 mb-3">$1</h2>')
-                      .replace(/^### (.+)$/gm, '<h3 class="text-xl font-semibold text-foreground mt-4 mb-2">$1</h3>')
+                      ?.replace(/^# (.+)$/gm, '<h2 class="text-3xl font-bold text-foreground mt-8 mb-4">$1</h2>')
+                      .replace(/^## (.+)$/gm, '<h3 class="text-2xl font-semibold text-foreground mt-6 mb-3">$1</h3>')
+                      .replace(/^### (.+)$/gm, '<h4 class="text-xl font-semibold text-foreground mt-4 mb-2">$1</h4>')
                       .replace(/^- (.+)$/gm, '<li class="ml-4">$1</li>')
                       .replace(/\*\*(.+?)\*\*/g, '<strong class="text-foreground">$1</strong>')
                       .replace(/\n\n/g, '</p><p class="mb-4">')
                       || "",
                   }}
                 />
-              </article>
+              </div>
             </GlassCard>
           </motion.div>
         </div>
-      </section>
+      </article>
     </Layout>
     </>
   );

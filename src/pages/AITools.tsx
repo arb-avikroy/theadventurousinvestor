@@ -30,7 +30,7 @@ import { modelTypes, categories } from "@/data/aiTools";
 import { useAITools, useUserCuratedAITools, useSubmitAITool, type NewUserCuratedTool } from "@/hooks/useAITools";
 import { ExternalLink, Search, Bot, Filter, X, Loader2, Plus, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Helmet } from "react-helmet-async";
+import { SEO, buildBreadcrumbSchema } from "@/components/SEO";
 import { useToast } from "@/hooks/use-toast";
 
 const AITools = () => {
@@ -452,14 +452,17 @@ const AITools = () => {
   );
 
   return (
-    <Layout>
-      <Helmet>
-        <title>AI Tools Directory - The Adventurous Investor</title>
-        <meta
-          name="description"
-          content="Explore curated collection of third-party AI tools and models for productivity, creativity, development, and more."
-        />
-      </Helmet>
+    <>
+      <SEO
+        title="AI Tools Directory — Curated AI Models & Productivity Tools"
+        description="Discover and explore 100+ curated AI tools and models for productivity, creativity, development, coding, and content creation. Free, freemium, and paid options."
+        canonical="https://www.adventurousinvestorhub.com/ai-tools"
+        jsonLd={buildBreadcrumbSchema([
+          { name: "Home", url: "https://www.adventurousinvestorhub.com" },
+          { name: "AI Tools", url: "https://www.adventurousinvestorhub.com/ai-tools" },
+        ])}
+      />
+      <Layout>
 
       <div className="min-h-screen py-20 px-4">
         <div className="max-w-7xl mx-auto">
@@ -775,6 +778,7 @@ const AITools = () => {
         </div>
       </div>
     </Layout>
+    </>
   );
 };
 

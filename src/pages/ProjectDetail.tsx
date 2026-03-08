@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { SEO, buildBreadcrumbSchema, buildSoftwareAppSchema } from "@/components/SEO";
 import { Layout } from "@/components/layout/Layout";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Tag } from "@/components/ui/Tag";
@@ -9,16 +10,16 @@ import { featuredProjects, otherProjects } from "@/data/projects";
 import { motion } from "framer-motion";
 import { useProject } from "@/hooks/useProjects";
 
+const SITE_URL = "https://www.adventurousinvestorhub.com";
+
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const { language } = useLanguage();
   const { data: dbProject, isLoading } = useProject(slug || "");
 
-  // Fallback to local data
   const allLocalProjects = [...featuredProjects, ...otherProjects];
   const localProject = allLocalProjects.find((p) => p.slug === slug);
 
-  // Use database project if available, otherwise use fallback
   const project = dbProject || (localProject ? {
     id: localProject.id.toString(),
     slug: localProject.slug,
@@ -79,107 +80,130 @@ const ProjectDetail = () => {
     );
   }
 
+  const projectTitle = language === "hi" ? project.title_hi : project.title_en;
+  const projectDesc = language === "hi" ? project.description_hi : project.description_en;
+  const canonicalUrl = `${SITE_URL}/projects/${project.slug}`;
+
   return (
-    <Layout>
-      <section className="py-24 px-4 min-h-screen">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Link to="/#projects">
-              <Button variant="ghost" className="mb-6 text-muted-foreground hover:text-foreground">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                {language === "hi" ? "प्रोजेक्ट्स पर वापस जाएं" : "Back to Projects"}
-              </Button>
-            </Link>
+    <>
+      <SEO
+        title={projectTitle}
+        description={projectDesc}
+        canonical={canonicalUrl}
+        jsonLd={[
+          buildSoftwareAppSchema({
+            name: project.title_en,
+            description: project.description_en,
+            url: canonicalUrl,
+          }),
+          buildBreadcrumbSchema([
+            { name: "Home", url: SITE_URL },
+            { name: "Projects", url: `${SITE_URL}/other-projects` },
+            { name: project.title_en, url: canonicalUrl },
+          ]),
+        ]}
+      />
+      <Layout>
+        <section className="py-24 px-4 min-h-screen">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Link to="/#projects">
+                <Button variant="ghost" className="mb-6 text-muted-foreground hover:text-foreground">
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  {language === "hi" ? "प्रोजेक्ट्स पर वापस जाएं" : "Back to Projects"}
+                </Button>
+              </Link>
 
-            <GlassCard className="p-8 md:p-10">
-              <div className="flex items-start justify-between flex-wrap gap-4 mb-6">
-                <h1 className="text-3xl md:text-4xl font-bold text-primary">
-                  {language === "hi" ? project.title_hi : project.title_en}
-                </h1>
-                {project.status && (
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm border ${statusColors[project.status] || ""}`}
-                  >
-                    {statusText[project.status]?.[language] || project.status}
-                  </span>
-                )}
-              </div>
-
-              <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                {language === "hi" ? project.long_description_hi : project.long_description_en}
-              </p>
-
-              <div className="flex flex-wrap gap-2 mb-8">
-                {project.tags.map((tag) => (
-                  <Tag key={tag}>{tag}</Tag>
-                ))}
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-8 mb-8">
-                <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-4">
-                    {language === "hi" ? "मुख्य विशेषताएं" : "Key Features"}
-                  </h3>
-                  <ul className="space-y-2">
-                    {(language === "hi" ? project.features_hi : project.features_en)?.map((feature, index) => (
-                      <li key={index} className="flex items-start gap-2 text-muted-foreground">
-                        <span className="text-primary mt-1">•</span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
+              <GlassCard className="p-8 md:p-10">
+                <div className="flex items-start justify-between flex-wrap gap-4 mb-6">
+                  <h1 className="text-3xl md:text-4xl font-bold text-primary">
+                    {projectTitle}
+                  </h1>
+                  {project.status && (
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm border ${statusColors[project.status] || ""}`}
+                    >
+                      {statusText[project.status]?.[language] || project.status}
+                    </span>
+                  )}
                 </div>
 
-                <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-4">
-                    {language === "hi" ? "टेक स्टैक" : "Tech Stack"}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech_stack?.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 py-1 bg-secondary rounded-lg text-sm text-foreground"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+                  {language === "hi" ? project.long_description_hi : project.long_description_en}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {project.tags.map((tag) => (
+                    <Tag key={tag}>{tag}</Tag>
+                  ))}
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                  <div>
+                    <h2 className="text-xl font-semibold text-foreground mb-4">
+                      {language === "hi" ? "मुख्य विशेषताएं" : "Key Features"}
+                    </h2>
+                    <ul className="space-y-2">
+                      {(language === "hi" ? project.features_hi : project.features_en)?.map((feature, index) => (
+                        <li key={index} className="flex items-start gap-2 text-muted-foreground">
+                          <span className="text-primary mt-1">•</span>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h2 className="text-xl font-semibold text-foreground mb-4">
+                      {language === "hi" ? "टेक स्टैक" : "Tech Stack"}
+                    </h2>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech_stack?.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-3 py-1 bg-secondary rounded-lg text-sm text-foreground"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="flex gap-4 pt-6 border-t border-border">
-                {project.github_url && (
-                  <Button variant="outline" asChild>
-                    <a href={project.github_url} target="_blank" rel="noopener noreferrer">
-                      <Github className="mr-2 h-4 w-4" />
-                      {language === "hi" ? "कोड देखें" : "View Code"}
-                    </a>
-                  </Button>
-                )}
-                {project.live_url && (
-                  <Button asChild>
-                    <a href="{project.live_url}" target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      {language === "hi" ? "लाइव डेमो" : "Live Demo"}
-                    </a>
-                  </Button>
-                )}
-                {project.status === "coming-soon" && (
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Clock className="h-4 w-4" />
-                    <span>{language === "hi" ? "जल्द उपलब्ध होगा" : "Available Soon"}</span>
-                  </div>
-                )}
-              </div>
-            </GlassCard>
-          </motion.div>
-        </div>
-      </section>
-    </Layout>
+                <div className="flex gap-4 pt-6 border-t border-border">
+                  {project.github_url && (
+                    <Button variant="outline" asChild>
+                      <a href={project.github_url} target="_blank" rel="noopener noreferrer">
+                        <Github className="mr-2 h-4 w-4" />
+                        {language === "hi" ? "कोड देखें" : "View Code"}
+                      </a>
+                    </Button>
+                  )}
+                  {project.live_url && (
+                    <Button asChild>
+                      <a href={project.live_url} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        {language === "hi" ? "लाइव डेमो" : "Live Demo"}
+                      </a>
+                    </Button>
+                  )}
+                  {project.status === "coming-soon" && (
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <Clock className="h-4 w-4" />
+                      <span>{language === "hi" ? "जल्द उपलब्ध होगा" : "Available Soon"}</span>
+                    </div>
+                  )}
+                </div>
+              </GlassCard>
+            </motion.div>
+          </div>
+        </section>
+      </Layout>
+    </>
   );
 };
 
