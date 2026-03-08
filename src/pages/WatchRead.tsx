@@ -141,9 +141,17 @@ const WatchRead = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{language === "hi" ? "देखें, पढ़ें और पाएँ अधिक | The Adventurous Investor" : "Watch, Read & Get More | The Adventurous Investor"}</title>
-      </Helmet>
+      <SEO
+        title={language === "hi" ? "देखें, पढ़ें और पाएँ अधिक — ब्लॉग, वीडियो और चीटशीट" : "Watch, Read & Get More — Blogs, Videos, Cheatsheets & Freebies"}
+        description={language === "hi"
+          ? "SAP, AI, फाइनेंस और ऑटोमेशन पर ब्लॉग, वीडियो ट्यूटोरियल, चीटशीट और डिस्काउंट कोड्स।"
+          : "Explore blogs, video tutorials, cheatsheets, and discount codes on SAP, AI, finance, and automation by Avik Barman."}
+        canonical="https://www.adventurousinvestorhub.com/watch-read"
+        jsonLd={buildBreadcrumbSchema([
+          { name: "Home", url: "https://www.adventurousinvestorhub.com" },
+          { name: "Watch & Read", url: "https://www.adventurousinvestorhub.com/watch-read" },
+        ])}
+      />
       <Layout>
         <section className="py-24 px-4 min-h-screen">
         <div className="max-w-6xl mx-auto">
