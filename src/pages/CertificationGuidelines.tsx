@@ -68,7 +68,7 @@ const CertificationGuidelines = () => {
                     asChild
                   >
                     <a
-                      href="https://docs.google.com/document/d/1hrpi7sNGNIKPDm3lot7kNJGvJeLUvMo9JrEytdOuwAg/edit?tab=t.0"
+                      href="https://docs.google.com/document/d/e/2PACX-1vS0A7Tf7SJZzk7AWks0PhinzbYbduI1iNoZ8NoQandaL8EE-kQIiO_Spop4BeETp-wjQAtvuoLEvTdJ/pub"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
