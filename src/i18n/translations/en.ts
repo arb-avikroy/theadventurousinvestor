@@ -68,6 +68,7 @@ export const en = {
     title: "The Adventurous Investor",
     watchMore: "YouTube Channel",
     watchRead: "Watch, Read & Get More",
+    certifications: "Certification Guidelines",
   },
   techStack: {
     handwritten: "the toolkit",

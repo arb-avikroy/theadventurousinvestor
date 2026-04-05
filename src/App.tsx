@@ -13,6 +13,7 @@ import OtherProjects from "./pages/OtherProjects";
 import ExploreAI from "./pages/ExploreAI";
 import WatchRead from "./pages/WatchRead";
 import AITools from "./pages/AITools";
+import CertificationGuidelines from "./pages/CertificationGuidelines";
 const queryClient = new QueryClient();
 import ScrollToTop from './components/ScrollToTop';
 import BlogDetail from './pages/BlogDetail';
@@ -38,6 +39,7 @@ const App = () => (
                 <Route path="/explore-ai" element={<ExploreAI />} />
                 <Route path="/ai-tools" element={<AITools />} />
                 <Route path="/watch-read" element={<WatchRead />} />
+                <Route path="/certification-guidelines" element={<CertificationGuidelines />} />
                 <Route path="/blog/:blogId" element={<BlogDetail />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

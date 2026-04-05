@@ -79,6 +79,16 @@ export const ContentEcosystem = () => {
             <Play className="mr-2 h-4 w-4" />
             {t("contentSection.watchMore")}
           </Button>
+          <Button
+            variant="outline"
+            className="border-primary/40 text-primary hover:bg-primary/10"
+            asChild
+          >
+            <Link to="/certification-guidelines">
+              <BookOpen className="mr-2 h-4 w-4" />
+              {t("contentSection.certifications")}
+            </Link>
+          </Button>
         </motion.div>
       </div>
     </section>

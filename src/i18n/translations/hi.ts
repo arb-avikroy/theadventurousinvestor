@@ -68,6 +68,7 @@ export const hi = {
     title: "द एडवेंचरस इन्वेस्टर",
     watchMore: "YouTube चैनल",
     watchRead: "देखें, पढ़ें और पाएँ अधिक",
+    certifications: "सर्टिफिकेशन गाइडलाइन्स",
   },
   techStack: {
     handwritten: "टूलकिट",
